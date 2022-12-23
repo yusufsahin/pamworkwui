@@ -1,34 +1,47 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import axios from "../Libs/TaskmanApi"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "../Libs/TaskmanApi";
 import { login } from "./securitySlice";
 
-
 const initialState = {
-    projectList : []
-}
+  projects: [],
+  project: {},
+  currentProject: {},
+  loading: true,
+  err: {},
+};
 
-export const getAllProjects = createAsyncThunk(
-    '/projects/getAllProjects', async (_, thunkApi) => {
-        try{
-            const response = await axios.get("/projects");
-            return response.data
-        }
-        catch(error){
-            return thunkApi.rejectWithValue(error.response?.data)
-        }            
-    } 
-)
+export const getProjects = createAsyncThunk(
+  "/projects/getProjects",
+  async (_, thunkApi) => {
+    try {
+      const response = await axios.get("/projects");
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 export const projectSlice = createSlice({
-    name:"project",
-    initialState,
-    reducers:{
-    },
-    extraReducers: (builder) => {
-        builder.addCase(getAllProjects.fulfilled, (state, action) => {
-            state.projectList = action.payload;
-        })
-    }
-})
+  name: "project",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getProjects.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getProjects.fulfilled, (state, action) => {
+      state.projects = action.payload;
+      state.loading=false;
+      state.err="";
+    });
+
+    builder.addCase(getProjects.rejected, (state, action) => {
+      state.loading = false;
+      state.err = "Problem on getting Data.";
+    });
+  },
+});
 
 export default projectSlice.reducer;
