@@ -18,9 +18,9 @@ export const login = createAsyncThunk(
   async (loginCred, thunkApi) => {
     try{
       const response = await axios.post(`/auth/login`,loginCred);
-      localStorage.setItem('token', JSON.stringify(response.data.token));
+      localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('refreshToken', JSON.stringify(response.data.refreshToken));
+      localStorage.setItem('refreshToken', response.data.refreshToken);
 
       return response.data;
     }
