@@ -30,6 +30,7 @@ import ProjectList from "../Components/Projects/ProjectList";
 import RequirementList from "../Components/Requirements/RequirementList";
 import TestcaseList from "../Components/Testcases/TestcaseList";
 import DefectList from "../Components/Defects/DefectList";
+import ModalManager from "../Libs/ModalManager";
 
 const mdTheme = createTheme();
 
@@ -44,6 +45,8 @@ const App = () => {
   };
 
   return (
+  <>
+  <ModalManager/>
     <ThemeProvider theme={mdTheme}>
       {isAuthenticated ? (
         <Box sx={{ display: "flex" }}>
@@ -151,6 +154,7 @@ const App = () => {
         </Box>
       )}
     </ThemeProvider>
+    </>
   );
 };
 

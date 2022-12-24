@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { getProjects } from "../../Store/projectSlice";
+import Button from "@mui/material/Button";
+import { openModal } from "../../Store/modalSlice";
 
 const ProjectList = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,15 @@ const ProjectList = () => {
     <CircularProgress />
   ) : (
     <Grid container spacing={3}>
+      {" "}
+      <Button
+        variant="contained"
+        onClick={() =>
+          dispatch(openModal({ modalType: "TestModal", modalProps: {} }))
+        }
+      >
+        Modal
+      </Button>
       {projects.length > 0 ? (
         projects.map((project) => {
           return (
@@ -35,7 +46,7 @@ const ProjectList = () => {
             </Grid>
           );
         })
-      ) : err === '' ? (
+      ) : err === "" ? (
         <Alert severity="info">No Data to display</Alert>
       ) : (
         <Alert severity="warning">Error on Getting Data!</Alert>
