@@ -43,11 +43,9 @@ const NoteNew = () => {
 
   const onSubmit = async (formProps) => {
     const { name, desccription, memo } = formProps;
-    if (name) { 
+    if (name) {
       await dispatch(saveNote(formProps)).then(dispatch(closeModal()));
       //console.log(formProps);
-  
-     
     }
   };
 
