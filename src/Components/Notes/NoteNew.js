@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../Store/securitySlice";
 import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../Store/modalSlice";
+import { saveNote } from "../../Store/noteSlice";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -42,10 +43,11 @@ const NoteNew = () => {
 
   const onSubmit = async (formProps) => {
     const { name, desccription, memo } = formProps;
-    if (name) {
-      console.log(formProps);
-      dispatch(closeModal());
-      // await dispatch(saveNote(formProps));
+    if (name) { 
+      await dispatch(saveNote(formProps)).then(dispatch(closeModal()));
+      //console.log(formProps);
+  
+     
     }
   };
 
