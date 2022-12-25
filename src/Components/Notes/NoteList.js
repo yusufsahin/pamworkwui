@@ -31,7 +31,7 @@ const NoteList = () => {
       <Button
         variant="contained"
         onClick={() =>
-          dispatch(openModal({ modalType: "NoteNew", modalProps: {} }))
+          dispatch(openModal({ modalType: "NoteNewModal", modalProps: {} }))
         }
       >
         New
