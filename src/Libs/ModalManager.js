@@ -1,10 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import TestModal from "../Components/Sandbox/TestModal";
+import NoteNew from "../Components/Notes/NoteNew";
 
 const ModalManager = () => {
   const modalLookup = {
-    TestModal
+    TestModal,
+    NoteNew,
   };
   const currentModal = useSelector((state) => state.modal);
   let renderedModal;

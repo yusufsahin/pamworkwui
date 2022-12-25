@@ -31,6 +31,7 @@ import RequirementList from "../Components/Requirements/RequirementList";
 import TestcaseList from "../Components/Testcases/TestcaseList";
 import DefectList from "../Components/Defects/DefectList";
 import ModalManager from "../Libs/ModalManager";
+import NoteList from "../Components/Notes/NoteList";
 
 const mdTheme = createTheme();
 
@@ -118,7 +119,14 @@ const App = () => {
                         </ProtectedRoute>
                       }
                     />
-                    
+                       <Route
+                      path="/notes"
+                      element={
+                        <ProtectedRoute>
+                          <NoteList />
+                        </ProtectedRoute>
+                      }
+                    />
                   </Routes>
 
                   <Footer sx={{ pt: 4 }} />

@@ -20,7 +20,7 @@ const ProjectList = () => {
     <CircularProgress />
   ) : (
     <Grid container spacing={3}>
-      {" "}
+
       <Button
         variant="contained"
         onClick={() =>

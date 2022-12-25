@@ -11,6 +11,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import CasesIcon from '@mui/icons-material/Cases';
+import NotesIcon from '@mui/icons-material/Notes';
 import {  Link as RouterLink } from "react-router-dom";
 export const mainListItems = (
   <React.Fragment>
@@ -43,6 +44,12 @@ export const mainListItems = (
         <CasesIcon />
       </ListItemIcon>
       <ListItemText primary="Defects" />
+    </ListItemButton>
+    <ListItemButton component={RouterLink} to="/notes">
+      <ListItemIcon>
+        <NotesIcon />
+      </ListItemIcon>
+      <ListItemText primary="Notes" />
     </ListItemButton>
   </React.Fragment>
 );
