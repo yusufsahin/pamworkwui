@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { getProjects } from "../../Store/projectSlice";
+import { changeProject, getProjects } from "../../Store/projectSlice";
 import Button from "@mui/material/Button";
 import { openModal } from "../../Store/modalSlice";
 
@@ -25,7 +25,6 @@ const ProjectList = () => {
     <CircularProgress />
   ) : (
     <Grid container spacing={3}>
-
       <Button
         variant="contained"
         onClick={() =>
@@ -46,6 +45,12 @@ const ProjectList = () => {
                     {project.projectManager} - {project.projectAssistant}
                   </Typography>
                   <Typography>Status: {project.status}</Typography>
+                  <Button
+                    ariant="contained"
+                    onClick={ () =>dispatch(changeProject(project))}
+                  >
+                    Edit
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>

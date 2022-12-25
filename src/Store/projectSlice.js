@@ -10,6 +10,16 @@ const initialState = {
   err: {},
 };
 
+export const changeProject = createAsyncThunk(
+  "/projects/changeProject",
+  async (data, thunkApi) => {
+    try {
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(data);
+    }
+  }
+);
 export const getProjects = createAsyncThunk(
   "/projects/getProjects",
   async (_, thunkApi) => {
@@ -27,14 +37,18 @@ export const projectSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(changeProject.fulfilled, (state, action) => {
+      state.currentProject = action.payload;
+    });
+
     builder.addCase(getProjects.pending, (state) => {
       state.loading = true;
     });
 
     builder.addCase(getProjects.fulfilled, (state, action) => {
       state.projects = action.payload;
-      state.loading=false;
-      state.err="";
+      state.loading = false;
+      state.err = "";
     });
 
     builder.addCase(getProjects.rejected, (state, action) => {
