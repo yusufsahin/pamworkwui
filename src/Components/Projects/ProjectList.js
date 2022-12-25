@@ -13,7 +13,12 @@ const ProjectList = () => {
   const loading = useSelector((state) => state.project.loading);
   const err = useSelector((state) => state.project.err);
   useEffect(() => {
-    dispatch(getProjects());
+    const fetchData = async () => {
+      // You can await here
+      await dispatch(getProjects());
+      // ...
+    };
+    fetchData();
   }, []);
 
   return loading === true ? (

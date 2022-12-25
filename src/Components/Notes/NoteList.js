@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridApi, GridCellValue } from "@mui/x-data-grid";
 
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { getNotes } from "../../Store/noteSlice";
+import { getNotes, changeNote } from "../../Store/noteSlice";
 import Button from "@mui/material/Button";
 import { openModal } from "../../Store/modalSlice";
 
@@ -13,6 +13,30 @@ const columns = [
   { field: "name", headerName: "Name", width: 130 },
   { field: "description", headerName: "Description", width: 130 },
   { field: "memo", headerName: "Memo", width: 130 },
+  {
+    field: "action",
+    headerName: "Action",
+    sortable: false,
+    renderCell: (params) => {
+      const onClick = (e) => {
+        e.stopPropagation(); // don't select this row after clicking
+
+        const api = params.api;
+        const thisRow = {};
+
+        api
+          .getAllColumns()
+          .filter((c) => c.field !== "__check__" && !!c)
+          .forEach(
+            (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
+          );
+
+        return alert(JSON.stringify(thisRow, null, 4));
+      };
+
+      return <Button onClick={onClick}>Edit</Button>;
+    },
+  },
 ];
 
 const NoteList = () => {
@@ -20,8 +44,14 @@ const NoteList = () => {
   const notes = useSelector((state) => state.note.notes);
   const loading = useSelector((state) => state.note.loading);
   const err = useSelector((state) => state.note.err);
+
   useEffect(() => {
-    dispatch(getNotes());
+    const fetchData = async () => {
+      // You can await here
+      await dispatch(getNotes());
+      // ...
+    };
+    fetchData();
   }, []);
 
   return loading === true ? (
