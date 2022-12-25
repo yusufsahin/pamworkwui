@@ -65,7 +65,7 @@ export const noteSlice = createSlice({
 
     builder.addCase(saveNote.rejected, (state, action) => {
       state.loading = false;
-      state.err = "Problem on getting Data.";
+      state.err = "Problem on saving Data.";
     });
   },
 });
