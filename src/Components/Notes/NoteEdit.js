@@ -34,9 +34,9 @@ const NoteEdit = () => {
     reset,
   } = useForm({
     defaultValues: {
-      id:note.id,
+      id: note.id,
       name: note.name,
-      description:note.description,
+      description: note.description,
       memo: note.memo,
     },
     resolver: yupResolver(schema),
@@ -44,6 +44,9 @@ const NoteEdit = () => {
 
   const onSubmit = async (formProps) => {
     const { name, desccription, memo } = formProps;
+    console.log("----Update Form Start-----");
+    console.log(formProps);
+    console.log("----Update Form Finish-----");
     if (name) {
       await dispatch(updateNote(formProps)).then(dispatch(closeModal()));
       //console.log(formProps);
@@ -99,21 +102,8 @@ const NoteEdit = () => {
               />
             )}
           />
-          <Button type="submit" variant="contained">
-            OK
-          </Button>
-          <Button
-            onClick={() =>
-              reset({
-                name: "",
-                desccription: "",
-                memo: "",
-              })
-            }
-            variant="outlined"
-          >
-            Reset
-          </Button>
+          <Button variant="contained" onClick={handleSubmit(onSubmit)}>Submit</Button>
+          
         </form>
       </Box>
     </div>
