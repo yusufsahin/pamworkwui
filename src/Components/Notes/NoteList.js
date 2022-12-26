@@ -20,6 +20,7 @@ const NoteList = () => {
   const dispatch = useDispatch();
   const notes = useSelector((state) => state.note.notes);
   const loading = useSelector((state) => state.note.loading);
+  const currentNote = useSelector((state) => state.note.currentNote)
   const err = useSelector((state) => state.note.err);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const NoteList = () => {
       // ...
     };
     fetchData();
-  }, []);
+  }, [currentNote]);
 
 const handleEdit=(record)=>{
   console.log(record);

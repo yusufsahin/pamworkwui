@@ -27,6 +27,7 @@ const NoteEdit = () => {
   const navigate = useNavigate();
   const note = useSelector((state) => state.note.currentNote);
 
+
   const {
     handleSubmit,
     formState: { errors },
@@ -42,8 +43,18 @@ const NoteEdit = () => {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    let defaults= {
+      id: note.id,
+      name: note.name,
+      description: note.description,
+      memo: note.memo
+    }
+    reset(defaults)
+  }, [note, reset])
+
   const onSubmit = async (formProps) => {
-    const { name, desccription, memo } = formProps;
+    const { name, description, memo } = formProps;
     console.log("----Update Form Start-----");
     console.log(formProps);
     console.log("----Update Form Finish-----");
@@ -102,7 +113,7 @@ const NoteEdit = () => {
               />
             )}
           />
-          <Button variant="contained" onClick={handleSubmit(onSubmit)}>Submit</Button>
+          <Button variant="contained" type="submit">Submit</Button>
           
         </form>
       </Box>

@@ -45,7 +45,7 @@ export const updateNote = createAsyncThunk(
   "/notes/updateNote",
   async (data, thunkApi) => {
     try {
-      const response = await axios.put("/notes", data);
+      const response = await axios.put(`/notes/${data.id}`, data);
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.response?.data);
