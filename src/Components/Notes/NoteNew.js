@@ -20,8 +20,12 @@ import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../Store/modalSlice";
 import { saveNote } from "../../Store/noteSlice";
 
+import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -45,10 +49,16 @@ const NoteNew = () => {
   });
 
   const onSubmit = async (formProps) => {
-   const { name, description, memo } = formProps;
+    const content = draftToHtml(convertToRaw(formProps.memo.getCurrentContent()));
+    const data = {
+      name:formProps.name,
+      description:formProps.description,
+      memo:content
+    }
 
-    if (name) {
-      await dispatch(saveNote(formProps)).then(dispatch(closeModal()));
+    console.log(data);
+    if (formProps.name) {
+      await dispatch(saveNote(data)).then(dispatch(closeModal()));
       // console.log(formProps);
     }
   };
