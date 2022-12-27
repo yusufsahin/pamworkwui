@@ -25,6 +25,9 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import { stripHtml } from "string-strip-html";
+
+import WYSIWYGEditor from "../../Libs/WYSIWYGEditor";
 
 
 const schema = yup.object().shape({
@@ -49,16 +52,16 @@ const NoteNew = () => {
   });
 
   const onSubmit = async (formProps) => {
-    const content = draftToHtml(convertToRaw(formProps.memo.getCurrentContent()));
-    const data = {
-      name:formProps.name,
-      description:formProps.description,
-      memo:content
-    }
+    //const content = draftToHtml(convertToRaw(formProps.memo.getCurrentContent()));
+    //const data = {
+    //  name:formProps.name,
+    //  description:formProps.description,
+    //  memo:content
+    //}
 
-    console.log(data);
+    console.log(formProps);
     if (formProps.name) {
-      await dispatch(saveNote(data)).then(dispatch(closeModal()));
+      await dispatch(saveNote(formProps)).then(dispatch(closeModal()));
       // console.log(formProps);
     }
   };
@@ -97,24 +100,22 @@ const NoteNew = () => {
               />
             )}
           />
-          <Controller
-            name="memo"
-            control={control}
-            render={({ field }) => {
-              return (
-                <Editor
-                  editorStyle={{
-                    padding: "0px 10px 10px",
-                    height: "200px",
-                  }}
-                  editorState={field.value}
-                  wrapperClassName="wrapper-class"
-                  editorClassName="editor-class"
-                  onEditorStateChange={field.onChange}
-                />
-              );
-            }}
-          />
+           <Controller
+          render={({ field }) => <WYSIWYGEditor {...field} />}
+          name="memo"
+          control={control}
+          defaultValue=""
+          rules={{
+            validate: {
+              required: (v) =>
+                (v && stripHtml(v).result.length > 0) ||
+                "Description is required",
+              maxLength: (v) =>
+                (v && stripHtml(v).result.length <= 2000) ||
+                "Maximum character limit is 2000",
+            },
+          }}
+        />
           <Button type="submit" variant="contained">
             OK
           </Button>
