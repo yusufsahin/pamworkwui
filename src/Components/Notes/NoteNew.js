@@ -20,6 +20,9 @@ import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../Store/modalSlice";
 import { saveNote } from "../../Store/noteSlice";
 
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 const schema = yup.object().shape({
   name: yup.string().required(),
 });
@@ -36,16 +39,17 @@ const NoteNew = () => {
     defaultValues: {
       name: "",
       description: "",
-      memo: "",
+      memo: null,
     },
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (formProps) => {
-    const { name, desccription, memo } = formProps;
+   const { name, description, memo } = formProps;
+
     if (name) {
       await dispatch(saveNote(formProps)).then(dispatch(closeModal()));
-      //console.log(formProps);
+      // console.log(formProps);
     }
   };
 
@@ -86,17 +90,20 @@ const NoteNew = () => {
           <Controller
             name="memo"
             control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Memo"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"memo" in errors}
-                helperText={errors.memo?.message}
-              />
-            )}
+            render={({ field }) => {
+              return (
+                <Editor
+                  editorStyle={{
+                    padding: "0px 10px 10px",
+                    height: "200px",
+                  }}
+                  editorState={field.value}
+                  wrapperClassName="wrapper-class"
+                  editorClassName="editor-class"
+                  onEditorStateChange={field.onChange}
+                />
+              );
+            }}
           />
           <Button type="submit" variant="contained">
             OK
@@ -106,7 +113,7 @@ const NoteNew = () => {
               reset({
                 name: "",
                 desccription: "",
-                memo: "",
+                memo: null,
               })
             }
             variant="outlined"

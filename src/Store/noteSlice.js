@@ -32,8 +32,10 @@ export const getNotes = createAsyncThunk(
 );
 export const saveNote = createAsyncThunk(
   "/notes/saveNote",
+ 
   async (data, thunkApi) => {
-    try {
+    try { 
+      console.log(data.memo)
       const response = await axios.post("/notes", data);
       return response.data;
     } catch (error) {
