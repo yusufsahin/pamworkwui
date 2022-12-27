@@ -53,6 +53,22 @@ export const updateNote = createAsyncThunk(
   }
 );
 
+export const deleteNote = createAsyncThunk(
+  "/notes/deleteNote",
+  async (data, thunkApi) => {
+    try {
+      const response = await axios.delete(`/notes/${data.id}`);
+      response.data = {
+        ...data,
+        id: data.id
+      }
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const noteSlice = createSlice({
   name: "note",
   initialState,
@@ -111,6 +127,27 @@ export const noteSlice = createSlice({
     builder.addCase(updateNote.rejected, (state, action) => {
       state.loading = false;
       state.err = "Problem on updating Data.";
+    });
+
+    builder.addCase(deleteNote.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(deleteNote.fulfilled, (state, action) => {
+      state.notes = state.notes.filter((item) => (item.id !== action.payload.id))
+      state.loading = false;
+      if(state.currentNote.id === action.payload.id){
+        state.currentNote = {};
+      }
+      if(state.note.id === action.payload.id){
+        state.note = {};
+      }
+      state.err = "";
+    });
+
+    builder.addCase(deleteNote.rejected, (state, action) => {
+      state.loading = false;
+      state.err = "Problem on Deleting Data.";
     });
   },
 });

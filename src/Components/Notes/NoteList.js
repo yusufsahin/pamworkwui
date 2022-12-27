@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import { getNotes, changeNote } from "../../Store/noteSlice";
+import { getNotes, changeNote, deleteNote } from "../../Store/noteSlice";
 import Button from "@mui/material/Button";
 import { openModal } from "../../Store/modalSlice";
 
@@ -34,11 +34,11 @@ const NoteList = () => {
 
 const handleEdit=(record)=>{
   console.log(record);
-  dispatch(changeNote(record)).then(dispatch(openModal({modalType:'NoteEditModal',modalProps:{title: 'Edit Note'}})));
+  dispatch(changeNote(record)).then(dispatch(openModal({modalType:'NoteEditModal', modalProps:{title: 'Edit Note'}})));
 }
 
-const handleDelete=()=>{
-  console.log('handle Delete')
+const handleDelete=(note)=>{
+  dispatch(changeNote(note)).then(dispatch(openModal({modalType:'NoteDeleteModal', modalProps:{title: 'Delete Note'}})));
 }
   return loading === true ? (
     <CircularProgress />
@@ -77,7 +77,7 @@ const handleDelete=()=>{
               <TableCell>{note.description}</TableCell>
               <TableCell>{note.memo}</TableCell>
               <TableCell ><Button variant="contained" onClick={()=>handleEdit(note)}>E</Button></TableCell>
-              <TableCell ><Button variant="outlined" onClick={handleDelete}>D</Button></TableCell>
+              <TableCell ><Button variant="outlined" onClick={()=>handleDelete(note)}>D</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
