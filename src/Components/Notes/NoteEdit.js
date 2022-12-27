@@ -18,6 +18,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../Store/modalSlice";
 import { updateNote } from "../../Store/noteSlice";
+import { EditorState, ContentState,convertToRaw } from 'draft-js';
+
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
+
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -26,7 +33,11 @@ const NoteEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const note = useSelector((state) => state.note.currentNote);
-
+  const blocksFromHtml = htmlToDraft(note.memo);
+  const { contentBlocks, entityMap } = blocksFromHtml;
+  const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+  const editorState = EditorState.createWithContent(contentState);
+  console.log(editorState);
 
   const {
     handleSubmit,
@@ -38,7 +49,7 @@ const NoteEdit = () => {
       id: note.id,
       name: note.name,
       description: note.description,
-      memo: note.memo,
+      memo: editorState,
     },
     resolver: yupResolver(schema),
   });
@@ -48,19 +59,24 @@ const NoteEdit = () => {
       id: note.id,
       name: note.name,
       description: note.description,
-      memo: note.memo
+      memo: editorState
     }
     reset(defaults)
   }, [note, reset])
 
   const onSubmit = async (formProps) => {
-    const { name, description, memo } = formProps;
-    console.log("----Update Form Start-----");
-    console.log(formProps);
-    console.log("----Update Form Finish-----");
-    if (name) {
-      await dispatch(updateNote(formProps)).then(dispatch(closeModal()));
-      //console.log(formProps);
+    const content = draftToHtml(convertToRaw(formProps.memo.getCurrentContent()));
+    const data = {
+      id:formProps.id,
+      name:formProps.name,
+      description:formProps.description,
+      memo:content
+    }
+
+    console.log(data);
+    if (formProps.name) {
+      await dispatch(updateNote(data)).then(dispatch(closeModal()));
+      // console.log(formProps);
     }
   };
 
@@ -98,20 +114,23 @@ const NoteEdit = () => {
               />
             )}
           />
-          <Controller
+           <Controller
             name="memo"
             control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Memo"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"memo" in errors}
-                helperText={errors.memo?.message}
-              />
-            )}
+            render={({ field }) => {
+              return (
+                <Editor
+                  editorStyle={{
+                    padding: "0px 10px 10px",
+                    height: "200px",
+                  }}
+                  editorState={field.value}
+                  wrapperClassName="wrapper-class"
+                  editorClassName="editor-class"
+                  onEditorStateChange={field.onChange}
+                />
+              );
+            }}
           />
           <Button variant="contained" type="submit">Submit</Button>
           
