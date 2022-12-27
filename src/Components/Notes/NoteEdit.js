@@ -113,7 +113,7 @@ const NoteEdit = () => {
                   (v && stripHtml(v).result.length > 0) ||
                   "Memo is required",
                 maxLength: (v) =>
-                  (v && stripHtml(v).result.length <= 2000) ||
+                  (v && stripHtml(v).result.length <= 100000000) ||
                   "Maximum character limit is 2000",
               },
             }}
