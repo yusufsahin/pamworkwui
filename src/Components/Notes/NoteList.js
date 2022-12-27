@@ -14,7 +14,7 @@ import Alert from "@mui/material/Alert";
 import { getNotes, changeNote, deleteNote } from "../../Store/noteSlice";
 import Button from "@mui/material/Button";
 import { openModal } from "../../Store/modalSlice";
-
+import { Parser } from 'html-to-react'
 
 const NoteList = () => {
   const dispatch = useDispatch();
@@ -75,7 +75,7 @@ const handleDelete=(note)=>{
               </TableCell>
               <TableCell >{note.name}</TableCell>
               <TableCell>{note.description}</TableCell>
-              <TableCell>{note.memo}</TableCell>
+              <TableCell>{Parser().parse(note.memo)}</TableCell>
               <TableCell ><Button variant="contained" onClick={()=>handleEdit(note)}>E</Button></TableCell>
               <TableCell ><Button variant="outlined" onClick={()=>handleDelete(note)}>D</Button></TableCell>
             </TableRow>
