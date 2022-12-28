@@ -1,38 +1,26 @@
 import React, { useEffect } from "react";
 
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Login from "@mui/icons-material/Login";
-import Typography from "@mui/material/Typography";
 
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../Store/securitySlice";
+
 import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../Store/modalSlice";
 import { saveNote } from "../../Store/noteSlice";
 
-import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import { stripHtml } from "string-strip-html";
-
-import WYSIWYGEditor from "../../Libs/WYSIWYGEditor";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { modules, formats } from "../../Libs/ReactQuillToolBar";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
 });
+
 const NoteNew = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,22 +88,23 @@ const NoteNew = () => {
               />
             )}
           />
-           <Controller
-          render={({ field }) => <WYSIWYGEditor {...field} />}
-          name="memo"
-          control={control}
-          defaultValue=""
-          rules={{
-            validate: {
-              required: (v) =>
-                (v && stripHtml(v).result.length > 0) ||
-                "Description is required",
-              maxLength: (v) =>
-                (v && stripHtml(v).result.length <= 2000) ||
-                "Maximum character limit is 2000",
-            },
-          }}
-        />
+          <Controller
+            name="memo"
+            control={control}
+            modules={modules}
+            formats={formats}
+            theme="snow"
+            render={({ field }) => (
+              <ReactQuill
+                {...field}
+                placeholder={"Write Memo"}
+                onChange={(text) => {
+                  field.onChange(text);
+                }}
+              />
+            )}
+          />
+
           <Button type="submit" variant="contained">
             OK
           </Button>
