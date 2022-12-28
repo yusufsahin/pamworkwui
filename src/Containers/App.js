@@ -129,7 +129,7 @@ const App = () => {
                     />
                   </Routes>
 
-                  <Footer sx={{ pt: 4 }} />
+                  <Footer/>
                 </Grid>
               </Grid>
             </Container>
