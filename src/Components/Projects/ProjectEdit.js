@@ -39,6 +39,12 @@ const ProjectEdit = () => {
       name: project.name,
       description: project.description,
       memo: project.memo,
+      scope:project.scope,
+      projectManager: project.projectManager,
+      projectAssistant: project.projectAssistant,
+      status: project.status,
+      startDate:project.startDate,
+      finishDate:project.finishDate
     },
     resolver: yupResolver(schema),
   });
@@ -49,6 +55,12 @@ const ProjectEdit = () => {
       name: project.name,
       description: project.description,
       memo: project.memo,
+      scope:project.scope,
+      projectManager: project.projectManager,
+      projectAssistant: project.projectAssistant,
+      status: project.status,
+      startDate:project.startDate,
+      finishDate:project.finishDate
     };
     reset(defaults);
   }, [project, reset]);

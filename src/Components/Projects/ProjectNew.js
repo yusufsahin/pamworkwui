@@ -36,9 +36,12 @@ const ProjectNew = () => {
       name: "",
       description: "",
       memo: null,
-      projectManager: "",
-      projectAssistant: "",
-      status: "Initation"
+      scope:null,
+      projectManager: null,
+      projectAssistant: null,
+      status: null,
+      startDate:null,
+      finishDate:null
     },
     resolver: yupResolver(schema),
   });

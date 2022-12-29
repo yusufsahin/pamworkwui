@@ -14,15 +14,14 @@ import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const statusArray = ["Initation","Planning", "Execution", "Monitor", "Closed"]
+const statusArray = ["Initation", "Planning", "Execution", "Monitor", "Closed"];
 
-const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
-
+const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
   const users = useSelector((state) => state.user.users);
 
   useEffect(() => {
-    console.log(users)
-  })
+    console.log(users);
+  });
   return (
     <div>
       <Box sx={{ mt: 1 }}>
@@ -57,7 +56,7 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
               />
             )}
           />
-            <Controller
+          <Controller
             name="scope"
             control={control}
             modules={modules}
@@ -94,7 +93,9 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
             control={control}
             render={({ field }) => (
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Project Manager</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Project Manager
+                </InputLabel>
                 <Select
                   {...field}
                   labelId="demo-simple-select-label"
@@ -102,7 +103,9 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
                   label="Project Manager"
                 >
                   {users.map((user) => {
-                    return <MenuItem value= {user.username}>{user.firstname + " " + user.lastname}</MenuItem>
+                    return (
+                      <MenuItem value={user.username}>{user.username}</MenuItem>
+                    );
                   })}
                 </Select>
               </FormControl>
@@ -113,7 +116,9 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
             control={control}
             render={({ field }) => (
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Project Assistant</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Project Assistant
+                </InputLabel>
                 <Select
                   {...field}
                   labelId="demo-simple-select-label"
@@ -121,7 +126,9 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
                   label="Project Assistant"
                 >
                   {users.map((user) => {
-                    return <MenuItem value= {user.username}>{user.firstname + " " + user.lastname}</MenuItem>
+                    return (
+                      <MenuItem value={user.username}>{user.username}</MenuItem>
+                    );
                   })}
                 </Select>
               </FormControl>
@@ -132,7 +139,9 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
             control={control}
             render={({ field }) => (
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Project Status</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  Project Status
+                </InputLabel>
                 <Select
                   {...field}
                   labelId="demo-simple-select-label"
@@ -140,28 +149,44 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
                   label="Project Status"
                 >
                   {statusArray.map((status) => {
-                    return <MenuItem value= {status}>{status}</MenuItem>
+                    return <MenuItem value={status}>{status}</MenuItem>;
                   })}
                 </Select>
               </FormControl>
             )}
           />
-
+          <Controller
+            name="startDate"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Start Date"
+                rows={8}
+                variant="filled"
+                fullWidth
+                error={"startDate" in errors}
+                helperText={errors.startDate?.message}
+              />
+            )}
+          />
+          <Controller
+            name="finishDate"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Finish Date"
+                rows={8}
+                variant="filled"
+                fullWidth
+                error={"finishDate" in errors}
+                helperText={errors.finishDate?.message}
+              />
+            )}
+          />
           <Button type="submit" variant="contained">
-            OK
-          </Button>
-          <Button
-            onClick={() =>
-              reset({
-                name: "",
-                desccription: "",
-                scope:null,
-                memo: null,
-              })
-            }
-            variant="outlined"
-          >
-            Reset
+            Save
           </Button>
         </form>
       </Box>
