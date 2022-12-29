@@ -121,7 +121,7 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
                   label="Project Assistant"
                 >
                   {users.map((user) => {
-                    return <MenuItem value= {user.username}>{user.firstname + "." + user.lastname}</MenuItem>
+                    return <MenuItem value= {user.username}>{user.firstname + " " + user.lastname}</MenuItem>
                   })}
                 </Select>
               </FormControl>
