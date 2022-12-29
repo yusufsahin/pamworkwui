@@ -41,7 +41,6 @@ const ProjectNew = () => {
   });
 
   const onSubmit = async (formProps) => {
-
     if (formProps.name) {
       await dispatch(saveProject(formProps)).then(dispatch(closeModal()));
       // console.log(formProps);

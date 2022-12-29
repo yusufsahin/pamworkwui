@@ -14,6 +14,7 @@ import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
+const statusArray = ["Initation","Planning", "Execution", "Monitor", "Closed"]
 
 const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
 
@@ -121,6 +122,25 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
                 >
                   {users.map((user) => {
                     return <MenuItem value= {user.username}>{user.firstname + "." + user.lastname}</MenuItem>
+                  })}
+                </Select>
+              </FormControl>
+            )}
+          />
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Project Status</InputLabel>
+                <Select
+                  {...field}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Project Status"
+                >
+                  {statusArray.map((status) => {
+                    return <MenuItem value= {status}>{status}</MenuItem>
                   })}
                 </Select>
               </FormControl>
