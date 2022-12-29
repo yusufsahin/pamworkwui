@@ -18,6 +18,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import { modules, formats } from "../../Libs/ReactQuillToolBar";
+import NoteForm from "./NoteForm";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -63,57 +64,7 @@ const NoteEdit = () => {
   return (
     <div>
       <Box sx={{ mt: 1 }}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Name"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"name" in errors}
-                helperText={errors.name?.message}
-              />
-            )}
-          />
-          <Controller
-            name="description"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Description"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"description" in errors}
-                helperText={errors.description?.message}
-              />
-            )}
-          />
-          <Controller
-            name="memo"
-            control={control}
-            modules={modules}
-            formats={formats}
-            theme="snow"
-            render={({ field }) => (
-              <ReactQuill
-                {...field}
-                placeholder={"Write Memo"}
-                onChange={(text) => {
-                  field.onChange(text);
-                }}
-              />
-            )}
-          />
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        </form>
+      <NoteForm control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} reset={reset} errors={errors}/>
       </Box>
     </div>
   );
