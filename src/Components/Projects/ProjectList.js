@@ -15,6 +15,7 @@ import { getProjects, changeProject, deleteProject } from "../../Store/projectSl
 import Button from "@mui/material/Button";
 import { openModal } from "../../Store/modalSlice";
 import { Parser } from 'html-to-react'
+import { getUsers } from "../../Store/userSlice";
 
 const ProjectList = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const ProjectList = () => {
     const fetchData = async () => {
       // You can await here
       await dispatch(getProjects());
+      dispatch(getUsers())
       // ...
     };
     fetchData();

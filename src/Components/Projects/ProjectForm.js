@@ -5,16 +5,23 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { modules, formats } from "../../Libs/ReactQuillToolBar";
 
+import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
+
 const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
 
+  const users = useSelector((state) => state.user.users);
 
+  useEffect(() => {
+    console.log(users)
+  })
   return (
     <div>
       <Box sx={{ mt: 1 }}>
@@ -79,6 +86,44 @@ const ProjectForm = ({ handleSubmit, control, reset ,onSubmit,errors}) => {
                   field.onChange(text);
                 }}
               />
+            )}
+          />
+          <Controller
+            name="projectManager"
+            control={control}
+            render={({ field }) => (
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Project Manager</InputLabel>
+                <Select
+                  {...field}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Project Manager"
+                >
+                  {users.map((user) => {
+                    return <MenuItem value= {user.username}>{user.firstname + "." + user.lastname}</MenuItem>
+                  })}
+                </Select>
+              </FormControl>
+            )}
+          />
+          <Controller
+            name="projectAssistant"
+            control={control}
+            render={({ field }) => (
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Project Assistant</InputLabel>
+                <Select
+                  {...field}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Project Assistant"
+                >
+                  {users.map((user) => {
+                    return <MenuItem value= {user.username}>{user.firstname + "." + user.lastname}</MenuItem>
+                  })}
+                </Select>
+              </FormControl>
             )}
           />
 
