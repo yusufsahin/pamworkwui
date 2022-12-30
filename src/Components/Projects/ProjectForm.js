@@ -5,14 +5,17 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 import { useForm, Controller } from "react-hook-form";
-
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ReactQuillToolBar from "../../Libs/ReactQuillToolBar";
 
 import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import {format} from 'date-fns';
+
 
 const statusArray = ["Initation", "Planning", "Execution", "Monitor", "Closed"];
 
@@ -95,7 +98,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Project Manager"
-                  value={field.value ? field.value : null} 
+                  value={field.value ? field.value : null}
                 >
                   {users.map((user) => {
                     return (
@@ -119,7 +122,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Project Assistant"
-                  value={field.value ? field.value : null} 
+                  value={field.value ? field.value : null}
                 >
                   {users.map((user) => {
                     return (
@@ -143,7 +146,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Project Status"
-                  value={field.value ? field.value : null} 
+                  value={field.value ? field.value : null}
                 >
                   {statusArray.map((status) => {
                     return <MenuItem value={status}>{status}</MenuItem>;
@@ -152,36 +155,70 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
               </FormControl>
             )}
           />
-          <Controller
-            name="startDate"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Start Date"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"startDate" in errors}
-                helperText={errors.startDate?.message}
-              />
-            )}
-          />
-          <Controller
-            name="finishDate"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Finish Date"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"finishDate" in errors}
-                helperText={errors.finishDate?.message}
-              />
-            )}
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Controller
+              name="startDate"
+              control={control}
+              defaultValue={null}
+              render={({
+                field: { onChange, value },
+                fieldState: { error, invalid },
+              }) => (
+                <DatePicker
+                  label="Start Date"
+                  value={value}
+                  onChange={(value) =>
+                    onChange(format(value,"yyyy-MM-dd"))
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      helperText={invalid ? error.message : null}
+                      id="startDate"
+                      variant="standard"
+                      margin="dense"
+                      fullWidth
+                      color="primary"
+                      autoComplete="bday"
+                      {...params}
+                      error={invalid}
+                    />
+                  )}
+                />
+              )}
+            />
+          </LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Controller
+              name="finishDate"
+              control={control}
+              defaultValue={null}
+              render={({
+                field: { onChange, value },
+                fieldState: { error, invalid },
+              }) => (
+                <DatePicker
+                  label="Finish Date"
+                  value={value}
+                  onChange={(value) =>
+                    onChange(format(value,"yyyy-MM-dd"))
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      helperText={invalid ? error.message : null}
+                      id="finishDate"
+                      variant="standard"
+                      margin="dense"
+                      fullWidth
+                      color="primary"
+                      autoComplete="bday"
+                      {...params}
+                      error={invalid}
+                    />
+                  )}
+                />
+              )}
+            />
+          </LocalizationProvider>
           <Button type="submit" variant="contained">
             Save
           </Button>
