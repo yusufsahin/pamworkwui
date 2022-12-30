@@ -22,9 +22,6 @@ const statusArray = ["Initation", "Planning", "Execution", "Monitor", "Closed"];
 const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
   const users = useSelector((state) => state.user.users);
 
-  useEffect(() => {
-    console.log(users);
-  });
   return (
     <div>
       <Box sx={{ mt: 1 }}>
@@ -34,6 +31,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
             control={control}
             render={({ field }) => (
               <TextField
+                sx={{marginBottom:2}}
                 {...field}
                 label="Name"
                 rows={8}
@@ -49,6 +47,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
             control={control}
             render={({ field }) => (
               <TextField
+                sx={{marginBottom:2}}
                 {...field}
                 label="Description"
                 rows={8}
@@ -89,7 +88,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
             name="projectManager"
             control={control}
             render={({ field }) => (
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{marginBottom:2, marginTop:2}}>
                 <InputLabel id="demo-simple-select-label">
                   Project Manager
                 </InputLabel>
@@ -97,7 +96,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   {...field}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label="Project Manager"
+                  label={field.value ? field.value : "Project Manager"}
                   value={field.value ? field.value : null}
                 >
                   {users.map((user) => {
@@ -113,7 +112,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
             name="projectAssistant"
             control={control}
             render={({ field }) => (
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{marginBottom:2}}>
                 <InputLabel id="demo-simple-select-label">
                   Project Assistant
                 </InputLabel>
@@ -121,7 +120,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   {...field}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label="Project Assistant"
+                  label={field.value ? field.value : "Project Assistant"}
                   value={field.value ? field.value : null}
                 >
                   {users.map((user) => {
@@ -137,7 +136,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
             name="status"
             control={control}
             render={({ field }) => (
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{marginBottom:2}}>
                 <InputLabel id="demo-simple-select-label">
                   Project Status
                 </InputLabel>
@@ -145,7 +144,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   {...field}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label="Project Status"
+                  label= {field.value ? field.value : "Project Status"}
                   value={field.value ? field.value : null}
                 >
                   {statusArray.map((status) => {
@@ -167,8 +166,30 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                 <DatePicker
                   label="Start Date"
                   value={value}
-                  onChange={(value) =>
-                    onChange(format(value,"yyyy-MM-dd"))
+                  onChange={(value) =>{
+                    onChange(
+                      () => {
+                        if(value === null){
+                          error = {}
+                          invalid = false;
+                        }
+                        else if(value.toString() === "Invalid Date"){
+                          error = {message: "Invalid date type"}
+                          invalid = true;
+                        }
+                        else{
+                          try{
+                            format(value,"yyyy-MM-dd")
+                            invalid = false;
+                          }
+                          catch(e){
+                            error = {message: "Invalid date type"}
+                            invalid = true;
+                          }
+                        }
+                      }
+                    )
+                  }          
                   }
                   renderInput={(params) => (
                     <TextField
@@ -200,10 +221,35 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   label="Finish Date"
                   value={value}
                   onChange={(value) =>
-                    onChange(format(value,"yyyy-MM-dd"))
+                    {
+                      
+                      onChange(
+                        () => {
+                          if(value === null){
+                            error = {}
+                            invalid = false;
+                          }
+                          else if(value.toString() === "Invalid Date"){
+                            error = {message: "Invalid date type"}
+                            invalid = true;
+                          }
+                          else{
+                            try{
+                              format(value,"yyyy-MM-dd")
+                              invalid = false;
+                            }
+                            catch(e){
+                              error = {message: "Invalid date type"}
+                              invalid = true;
+                            }
+                          }
+                        }
+                      )
+                    } 
                   }
                   renderInput={(params) => (
                     <TextField
+                      sx={{marginBottom:2}}
                       helperText={invalid ? error.message : null}
                       id="finishDate"
                       variant="standard"
