@@ -15,7 +15,7 @@ import { saveNote } from "../../Store/noteSlice";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { modules, formats } from "../../Libs/ReactQuillToolBar";
+import ReactQuillToolBar,{ modules, formats } from "../../Libs/ReactQuillToolBar";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -54,6 +54,7 @@ const NoteNew = () => {
     }
   };
 
+
   return (
     <div>
       <Box sx={{ mt: 1 }}>
@@ -91,11 +92,8 @@ const NoteNew = () => {
           <Controller
             name="memo"
             control={control}
-            modules={modules}
-            formats={formats}
-            theme="snow"
             render={({ field }) => (
-              <ReactQuill
+              <ReactQuillToolBar
                 {...field}
                 placeholder={"Write Memo"}
                 onChange={(text) => {
