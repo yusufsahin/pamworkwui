@@ -96,7 +96,6 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   {...field}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label={field.value ? field.value : "Project Manager"}
                   value={field.value ? field.value : null}
                 >
                   {users.map((user) => {
@@ -120,7 +119,6 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   {...field}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label={field.value ? field.value : "Project Assistant"}
                   value={field.value ? field.value : null}
                 >
                   {users.map((user) => {
@@ -144,7 +142,6 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   {...field}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label= {field.value ? field.value : "Project Status"}
                   value={field.value ? field.value : null}
                 >
                   {statusArray.map((status) => {
@@ -166,33 +163,12 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                 <DatePicker
                   label="Start Date"
                   value={value}
-                  onChange={(value) =>{
-                    onChange(
-                      () => {
-                        if(value === null){
-                          error = {}
-                          invalid = false;
-                        }
-                        else if(value.toString() === "Invalid Date"){
-                          error = {message: "Invalid date type"}
-                          invalid = true;
-                        }
-                        else{
-                          try{
-                            format(value,"yyyy-MM-dd")
-                            invalid = false;
-                          }
-                          catch(e){
-                            error = {message: "Invalid date type"}
-                            invalid = true;
-                          }
-                        }
-                      }
-                    )
-                  }          
+                  onChange={(value) =>
+                    onChange(format(value,"yyyy-MM-dd"))
                   }
                   renderInput={(params) => (
                     <TextField
+                      sx={{marginBottom:2}}
                       helperText={invalid ? error.message : null}
                       id="startDate"
                       variant="standard"
@@ -221,31 +197,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   label="Finish Date"
                   value={value}
                   onChange={(value) =>
-                    {
-                      
-                      onChange(
-                        () => {
-                          if(value === null){
-                            error = {}
-                            invalid = false;
-                          }
-                          else if(value.toString() === "Invalid Date"){
-                            error = {message: "Invalid date type"}
-                            invalid = true;
-                          }
-                          else{
-                            try{
-                              format(value,"yyyy-MM-dd")
-                              invalid = false;
-                            }
-                            catch(e){
-                              error = {message: "Invalid date type"}
-                              invalid = true;
-                            }
-                          }
-                        }
-                      )
-                    } 
+                    onChange(format(value,"yyyy-MM-dd"))
                   }
                   renderInput={(params) => (
                     <TextField
