@@ -34,9 +34,9 @@ const ProjectList = () => {
     fetchData();
   }, [currentProject]);
 
-const handleEdit=(record)=>{
+const handleEdit=async (record)=>{
   console.log(record);
-  dispatch(changeProject(record)).then(dispatch(openModal({modalType:'ProjectEditModal', modalProps:{title: 'Edit Project'}})));
+  await dispatch(changeProject(record)).then(dispatch(openModal({modalType:'ProjectEditModal', modalProps:{title: 'Edit Project'}})));
 }
 
 const handleDelete=(project)=>{

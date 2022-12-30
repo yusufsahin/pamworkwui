@@ -95,6 +95,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Project Manager"
+                  value={field.value}
                 >
                   {users.map((user) => {
                     return (
@@ -118,6 +119,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Project Assistant"
+                  value={field.value}
                 >
                   {users.map((user) => {
                     return (
@@ -141,6 +143,7 @@ const ProjectForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Project Status"
+                  value={field.value}
                 >
                   {statusArray.map((status) => {
                     return <MenuItem value={status}>{status}</MenuItem>;
