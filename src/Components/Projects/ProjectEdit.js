@@ -12,21 +12,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../Store/modalSlice";
-import { updateNote } from "../../Store/noteSlice";
+import { updateProject } from "../../Store/projectSlice";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import { modules, formats } from "../../Libs/ReactQuillToolBar";
-import NoteForm from "./NoteForm";
+import ProjectForm from "./ProjectForm";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
 });
-const NoteEdit = () => {
+const ProjectEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const note = useSelector((state) => state.note.currentNote);
+  const project = useSelector((state) => state.project.currentProject);
 
   const {
     handleSubmit,
@@ -35,40 +35,51 @@ const NoteEdit = () => {
     reset,
   } = useForm({
     defaultValues: {
-      id: note.id,
-      name: note.name,
-      description: note.description,
-      memo: note.memo,
+      id: project.id,
+      name: project.name,
+      description: project.description,
+      memo: project.memo,
+      scope:project.scope,
+      projectManager: project.projectManager,
+      projectAssistant: project.projectAssistant,
+      status: project.status,
+      startDate:project.startDate,
+      finishDate:project.finishDate
     },
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
     let defaults = {
-      id: note.id,
-      name: note.name,
-      description: note.description,
-      memo: note.memo,
+      id: project.id,
+      name: project.name,
+      description: project.description,
+      memo: project.memo,
+      scope:project.scope,
+      projectManager: project.projectManager,
+      projectAssistant: project.projectAssistant,
+      status: project.status,
+      startDate:project.startDate,
+      finishDate:project.finishDate
     };
     reset(defaults);
-  }, [note, reset]);
+  }, [project, reset]);
 
   const onSubmit = async (formProps) => {
     console.log(formProps);
     if (formProps.name) {
-      await dispatch(updateNote(formProps)).then(dispatch(closeModal()));
+      await dispatch(updateProject(formProps)).then(dispatch(closeModal()));
       // console.log(formProps);
     }
   };
 
-
   return (
     <div>
       <Box sx={{ mt: 1 }}>
-        <NoteForm control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} reset={reset} errors={errors} />
+      <ProjectForm control={control} handleSubmit={handleSubmit} onSubmit={onSubmit} reset={reset} errors={errors}/>
       </Box>
     </div>
   );
 };
 
-export default NoteEdit;
+export default ProjectEdit;

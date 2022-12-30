@@ -3,6 +3,7 @@ import securitySlice from "./securitySlice";
 import projectSlice from "./projectSlice";
 import modalSlice from "./modalSlice";
 import noteSlice from "./noteSlice";
+import userSlice from "./userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     project: projectSlice,
     note: noteSlice,
     modal: modalSlice,
+    user: userSlice,
   },
 });

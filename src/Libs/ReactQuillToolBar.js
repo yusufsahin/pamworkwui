@@ -45,7 +45,7 @@ const formats = [
 const ReactQuillToolBar = (field) => {
   return (
     <ReactQuill
-    name="RQToolbar"
+
       value={field.value}
       onChange={(text) => {
         field.onChange(text);

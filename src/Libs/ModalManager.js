@@ -4,13 +4,19 @@ import TestModal from "../Components/Sandbox/TestModal";
 import NoteNewModal from "../Components/Notes/NoteNewModal";
 import NoteEditModal from "../Components/Notes/NoteEditModal";
 import NoteDeleteModal from "../Components/Notes/NoteDeleteModal";
+import ProjectNewModal from "../Components/Projects/ProjectNewModal";
+import ProjectEditModal from "../Components/Projects/ProjectEditModal";
+import ProjectDeleteModal from "../Components/Projects/ProjectDeleteModal";
 
 const ModalManager = () => {
   const modalLookup = {
     TestModal,
     NoteNewModal,
     NoteEditModal,
-    NoteDeleteModal
+    NoteDeleteModal,
+    ProjectNewModal,
+    ProjectEditModal,
+    ProjectDeleteModal,
   };
   const currentModal = useSelector((state) => state.modal);
   let renderedModal;
