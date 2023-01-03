@@ -8,6 +8,10 @@ import ProjectNewModal from "../Components/Projects/ProjectNewModal";
 import ProjectEditModal from "../Components/Projects/ProjectEditModal";
 import ProjectDeleteModal from "../Components/Projects/ProjectDeleteModal";
 
+import WorkitemNewModal from "../Components/Workitems/WorkitemNewModal";
+import WorkitemEditModal from "../Components/Workitems/WorkitemEditModal";
+import WorkitemDeleteModal from "../Components/Workitems/WorkitemDeleteModal";
+
 const ModalManager = () => {
   const modalLookup = {
     TestModal,
@@ -17,6 +21,9 @@ const ModalManager = () => {
     ProjectNewModal,
     ProjectEditModal,
     ProjectDeleteModal,
+    WorkitemNewModal,
+    WorkitemEditModal,
+    WorkitemDeleteModal
   };
   const currentModal = useSelector((state) => state.modal);
   let renderedModal;

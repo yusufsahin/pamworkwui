@@ -21,6 +21,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
+    <ListItemButton  component={RouterLink}  to="/projectDashboard">
+      <ListItemIcon>
+        <DirectionsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Project Dashboard" />
+    </ListItemButton>
     <ListItemButton  component={RouterLink}  to="/projects">
       <ListItemIcon>
         <DirectionsIcon />

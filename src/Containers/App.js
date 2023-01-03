@@ -32,6 +32,7 @@ import TestcaseList from "../Components/Testcases/TestcaseList";
 import DefectList from "../Components/Defects/DefectList";
 import ModalManager from "../Libs/ModalManager";
 import NoteList from "../Components/Notes/NoteList";
+import ProjectDashboard from "./ProjectDashboard";
 
 const mdTheme = createTheme();
 
@@ -92,6 +93,14 @@ const App = () => {
                       element={
                         <ProtectedRoute>
                           <ProjectList />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/projectDashboard"
+                      element={
+                        <ProtectedRoute>
+                          <ProjectDashboard />
                         </ProtectedRoute>
                       }
                     />
