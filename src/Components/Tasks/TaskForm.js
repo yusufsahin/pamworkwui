@@ -17,9 +17,9 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {format} from 'date-fns';
 
 
-const stateArray = ["Cancelled","Blocked","InBackLog","WIP","ReadyToTest","InTest","Deployed","Released"];
+const statusArray = ["Cancelled","Blocked","ToDo","InProgress","ToVerify","Done"];
 const categoryArray = [ "Analysis","Development","Test","Operation","Document"];
-const typeArray = ["Request","UserStory","Bug","Ticket"];
+const typeArray = ["Task"];
 
 const TaskForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
   const users = useSelector((state) => state.user.users);
@@ -60,29 +60,45 @@ const TaskForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
               />
             )}
           />
-           <Controller
-            name="point"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                sx={{marginBottom:2}}
-                {...field}
-                label="Point"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"point" in errors}
-                helperText={errors.point?.message}
-              />
-            )}
+          <Controller
+          name="hoursExpected"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              sx={{marginBottom:2}}
+              {...field}
+              label="Hours Expected"
+              rows={8}
+              variant="filled"
+              fullWidth
+              error={"hoursExpected" in errors}
+              helperText={errors.point?.message}
+            />
+          )}
           />
           <Controller
-            name="responsibleUser"
+          name="hoursActual"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              sx={{marginBottom:2}}
+              {...field}
+              label="Hours Actual"
+              rows={8}
+              variant="filled"
+              fullWidth
+              error={"hoursActual" in errors}
+              helperText={errors.point?.message}
+            />
+          )}
+          />
+          <Controller
+            name="assignTo"
             control={control}
             render={({ field }) => (
               <FormControl fullWidth sx={{marginBottom:2, marginTop:2}}>
                 <InputLabel id="demo-simple-select-label">
-                  Responsible User
+                  Assign To
                 </InputLabel>
                 <Select
                   {...field}
@@ -99,7 +115,7 @@ const TaskForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
           />
         
           <Controller
-            name="state"
+            name="status"
             control={control}
             render={({ field }) => (
               <FormControl fullWidth sx={{marginBottom:2}}>
@@ -111,8 +127,8 @@ const TaskForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
                 
                   value={field.value ? field.value : null}
                 >
-                  {stateArray.map((state) => {
-                    return <MenuItem value={state}>{state}</MenuItem>;
+                  {statusArray.map((status) => {
+                    return <MenuItem value={status}>{status}</MenuItem>;
                   })}
                 </Select>
               </FormControl>

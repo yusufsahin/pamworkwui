@@ -22,10 +22,10 @@ const schema = yup.object().shape({
   name: yup.string().required(),
 });
 
-const TaskNew = () => {
+const TaskNew = ({currentWorkitem}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const currentProject= useSelector((state) => state.project.currentProject);
+  //const currentWorkitem= useSelector((state) => state.workitem.currentWorkitem);
   const {
     handleSubmit,
     formState: { errors },
@@ -35,15 +35,16 @@ const TaskNew = () => {
     defaultValues: {
       name: "",
       description: "",
-      point: null,
+      hoursExpected:null,
+      hoursActual:null,
       dueDate:null,
       expectedDate: null,
       actualDate:null,
-      responsibleUser: null,
+      assignTo: null,
       type: null,
       category:null,
-      state:null,
-      projectid:currentProject.id,
+      status:null,
+      workitemid:currentWorkitem.id,
     },
     resolver: yupResolver(schema),
   });

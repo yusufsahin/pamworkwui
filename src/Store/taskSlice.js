@@ -45,8 +45,8 @@ export const saveTask = createAsyncThunk(
  
   async (data, thunkApi) => {
     try { 
-      console.log(data.memo)
       const response = await axios.post("/tasks", data);
+      console.log(response)
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.response?.data);

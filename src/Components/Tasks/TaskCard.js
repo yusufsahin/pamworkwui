@@ -49,7 +49,7 @@ const handleDelete=(task)=>{
       <Button
         variant="contained"
         onClick={() =>
-          dispatch(openModal({ modalType: "TaskNewModal", modalProps: {} }))
+          dispatch(openModal({ modalType: "TaskNewModal", modalProps: {currentWorkitem} }))
         }
         sx={{
           marginBottom:2,
