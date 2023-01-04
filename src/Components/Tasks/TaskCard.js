@@ -17,7 +17,7 @@ import { getUsers } from "../../Store/userSlice";
 
 const TaskCard = ({ currentWorkitem }) => {
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.task.tasks);
+  const tasks = useSelector((state) => state.task.tasks).filter(t =>t.workitemid===currentWorkitem.id);
   const loading = useSelector((state) => state.task.loading);
 
   const err = useSelector((state) => state.task.err);
