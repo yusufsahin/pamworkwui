@@ -72,9 +72,10 @@ const handleDelete=(workitem)=>{
               <AccordionDetails>
                 <Typography>
                 {workitem.description}
-                </Typography>
+                </Typography> 
+                <TaskCard currentWorkitem={workitem}/>
               </AccordionDetails>
-              <TaskCard currentWorkitem={workitem}/>
+             
             </Accordion>
           ))}
       
