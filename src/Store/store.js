@@ -5,6 +5,7 @@ import modalSlice from "./modalSlice";
 import noteSlice from "./noteSlice";
 import userSlice from "./userSlice";
 import workitemSlice from "./workitemSlice";
+import taskSlice from "./taskSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     modal: modalSlice,
     user: userSlice,
     workitem:workitemSlice,
+    task:taskSlice
   },
 });
