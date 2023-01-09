@@ -22,10 +22,10 @@ const schema = yup.object().shape({
   name: yup.string().required(),
 });
 
-const TaskNew = ({currentWorkitem}) => {
+const TaskNew =() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //const currentWorkitem= useSelector((state) => state.workitem.currentWorkitem);
+  const currentWorkitem= useSelector((state) => state.workitem.currentWorkitem);
   const {
     handleSubmit,
     formState: { errors },
