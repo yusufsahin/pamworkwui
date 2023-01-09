@@ -17,6 +17,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { modules, formats } from "../../Libs/ReactQuillToolBar";
 import TaskForm from "./TaskForm";
+import { getWorkitems } from "../../Store/workitemSlice";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -25,7 +26,9 @@ const schema = yup.object().shape({
 const TaskNew =() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const currentWorkitem= useSelector((state) => state.workitem.currentWorkitem);
+  const currentProject = useSelector(state => state.project.currentProject);
 
   const {
     handleSubmit,
@@ -55,7 +58,7 @@ const TaskNew =() => {
     console.log(currentWorkitem.id);
     console.log(formProps)
     if (formProps.name) {
-      await dispatch(saveTask(formProps)).then(dispatch(closeModal()));
+      await dispatch(saveTask(formProps)).then(dispatch(closeModal())).then(dispatch(getWorkitems(currentProject)));
       // console.log(formProps);
     }
   };
