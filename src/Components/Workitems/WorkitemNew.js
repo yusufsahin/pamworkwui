@@ -43,7 +43,7 @@ const WorkitemNew = () => {
       type: null,
       category:null,
       state:null,
-      projectid:currentProject.id,
+      projectId:currentProject.id,
     },
     resolver: yupResolver(schema),
   });
