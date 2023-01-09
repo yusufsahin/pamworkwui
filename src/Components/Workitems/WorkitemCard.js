@@ -87,13 +87,13 @@ const WorkitemCard = ({ currentProject }) => {
               <Typography>{workitem.name}</Typography>
               <Button
                 variant="contained"
-                onClick={() =>dispatch(changeWorkitem(workitem).then(
+                onClick={() =>dispatch(changeWorkitem(workitem)).then(
                   dispatch(
                     openModal({
                       modalType: "TaskNewModal",
                       modalProps: {},
                     })
-                  )))
+                  ))
                 }
                 sx={{
                   marginBottom: 2,

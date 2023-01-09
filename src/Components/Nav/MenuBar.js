@@ -38,7 +38,7 @@ const MenuBar = ({ open, toggleDrawer }) => {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          TASKMAN
+          PAMWORK
         </Typography>
         <IconButton color="inherit">
           <Badge badgeContent={4} color="secondary">

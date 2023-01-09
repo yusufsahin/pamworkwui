@@ -29,7 +29,7 @@ export const getTasks = createAsyncThunk(
 
     if(workitem!==null)
     {
-       url=`/tasks?workitemid=${workitem.id}`;
+       url=`/tasks?workitemId=${workitem.id}`;
 
     }
 

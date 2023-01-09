@@ -26,6 +26,7 @@ const TaskNew =() => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentWorkitem= useSelector((state) => state.workitem.currentWorkitem);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -44,12 +45,14 @@ const TaskNew =() => {
       type: null,
       category:null,
       status:null,
-      workitemid:currentWorkitem.id,
+      workitemId:currentWorkitem.id,
     },
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (formProps) => {
+    formProps.workitemId = currentWorkitem.id;
+    console.log(currentWorkitem.id);
     console.log(formProps)
     if (formProps.name) {
       await dispatch(saveTask(formProps)).then(dispatch(closeModal()));

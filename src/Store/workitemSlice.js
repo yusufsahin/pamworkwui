@@ -28,7 +28,7 @@ export const getWorkitems = createAsyncThunk(
 
     if(project!==null)
     {
-       url=`/workitems?projectid=${project.id}`;
+       url=`/workitems?projectId=${project.id}`;
     }
 
       const response = await axios.get(url);
