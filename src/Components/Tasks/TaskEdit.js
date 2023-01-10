@@ -27,7 +27,7 @@ const TaskEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const task = useSelector((state) => state.task.currentTask);
-  const currentProject = useSelector((state) => state.project.currentProject);
+  const currentWorkitem = useSelector((state) => state.workitem.currentWorkitem);
   const {
     handleSubmit,
     formState: { errors },
@@ -46,7 +46,7 @@ const TaskEdit = () => {
       type: task.type,
       category:task.category,
       state:task.state,
-      projectid:currentProject.id,
+      workitemId:currentWorkitem.id,
     },
     resolver: yupResolver(schema),
   });
@@ -64,7 +64,7 @@ const TaskEdit = () => {
       type: task.type,
       category:task.category,
       state:task.state,
-      projectid:currentProject.id,
+      workitemId:currentWorkitem.id,
     };
     reset(defaults);
   }, [task, reset]);

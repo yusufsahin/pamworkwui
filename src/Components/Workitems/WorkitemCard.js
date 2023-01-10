@@ -13,6 +13,7 @@ import {
   changeWorkitem,
   deleteWorkitem,
 } from "../../Store/workitemSlice";
+import { changeTask } from "../../Store/taskSlice";
 import Button from "@mui/material/Button";
 import { openModal } from "../../Store/modalSlice";
 import { Parser } from "html-to-react";
@@ -84,17 +85,22 @@ const WorkitemCard = ({ currentProject }) => {
               aria-controls="panel1a-content"
               id={workitem.id}
             >
+              <Typography>{workitem.id}</Typography>
               <Typography>{workitem.name}</Typography>
-              <Button variant="contained" onClick={()=>handleEdit(workitem)}>Edit</Button>
+              <Button variant="contained" onClick={() => handleEdit(workitem)}>
+                Edit
+              </Button>
               <Button
                 variant="contained"
-                onClick={() =>dispatch(changeWorkitem(workitem)).then(
-                  dispatch(
-                    openModal({
-                      modalType: "TaskNewModal",
-                      modalProps: {},
-                    })
-                  ))
+                onClick={() =>
+                  dispatch(changeWorkitem(workitem)).then(
+                    dispatch(
+                      openModal({
+                        modalType: "TaskNewModal",
+                        modalProps: {},
+                      })
+                    )
+                  )
                 }
                 sx={{
                   marginBottom: 2,
@@ -105,8 +111,7 @@ const WorkitemCard = ({ currentProject }) => {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>{workitem.description}</Typography>
-              {
-                workitem.tasks ? 
+              {workitem.tasks ? (
                 workitem.tasks.map((task) => {
                   return (
                     <>
@@ -120,14 +125,32 @@ const WorkitemCard = ({ currentProject }) => {
                         </AccordionSummary>
                         <AccordionDetails>
                           <Typography>{task.description}</Typography>
+                          <Button
+                            variant="contained"
+                            onClick={() =>
+                              dispatch(changeTask(task)).then(
+                                dispatch(
+                                  openModal({
+                                    modalType: "TaskEditModal",
+                                    modalProps: {},
+                                  })
+                                )
+                              )
+                            }
+                            sx={{
+                              marginBottom: 2,
+                            }}
+                          >
+                            Edit Task
+                          </Button>
                         </AccordionDetails>
                       </Accordion>
                     </>
                   );
                 })
-                :
+              ) : (
                 <></>
-              }
+              )}
             </AccordionDetails>
           </Accordion>
         );
