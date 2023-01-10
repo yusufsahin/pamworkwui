@@ -72,7 +72,7 @@ const WorkitemEdit = () => {
   const onSubmit = async (formProps) => {
     console.log(formProps);
     if (formProps.name) {
-      await dispatch(updateWorkitem(formProps)).then(dispatch(closeModal())).then(dispatch(getWorkitems(currentProject)));
+      await dispatch(updateWorkitem(formProps)).then(dispatch(getWorkitems(currentProject)).then(dispatch(closeModal())));
       // console.log(formProps);
     }
   };

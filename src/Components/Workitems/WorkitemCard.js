@@ -28,14 +28,9 @@ const WorkitemCard = ({ currentProject }) => {
   const err = useSelector((state) => state.workitem.err);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // You can await here
-      await dispatch(getWorkitems(currentProject));
-      dispatch(getUsers());
-      // ...
-    };
-    fetchData();
-  }, [currentProject]);
+    dispatch(getWorkitems(currentProject));
+    dispatch(getUsers());
+  }, []);
 
   const handleEdit = async (record) => {
     console.log(record);
@@ -90,6 +85,9 @@ const WorkitemCard = ({ currentProject }) => {
               <Button variant="contained" onClick={() => handleEdit(workitem)}>
                 Edit
               </Button>
+              <Button variant="outlined" onClick={() => handleDelete(workitem)}>
+                D
+              </Button>
               <Button
                 variant="contained"
                 onClick={() =>
@@ -142,6 +140,24 @@ const WorkitemCard = ({ currentProject }) => {
                             }}
                           >
                             Edit Task
+                          </Button>
+                          <Button
+                            variant="contained"
+                            onClick={() =>
+                              dispatch(changeTask(task)).then(
+                                dispatch(
+                                  openModal({
+                                    modalType: "TaskDeleteModal",
+                                    modalProps: {},
+                                  })
+                                )
+                              )
+                            }
+                            sx={{
+                              marginBottom: 2,
+                            }}
+                          >
+                            Delete Task
                           </Button>
                         </AccordionDetails>
                       </Accordion>
