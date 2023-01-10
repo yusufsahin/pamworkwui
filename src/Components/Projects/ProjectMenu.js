@@ -97,6 +97,7 @@ const ProjectMenu = () => {
                   onClick={() => {
                     dispatch(changeProject(project));
                   }}
+                  selected={project.id===currentProject.id ? true :false}
                 >
                   <ListItemText primary={project.name} />
                 </ListItemButton>
