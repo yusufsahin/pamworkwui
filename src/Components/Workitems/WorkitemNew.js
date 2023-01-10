@@ -50,6 +50,7 @@ const WorkitemNew = () => {
 
   const onSubmit = async (formProps) => {
     console.log(formProps)
+    formProps.projectId = currentProject.id;
     if (formProps.name) {
       await dispatch(saveWorkitem(formProps)).then(dispatch(closeModal()));
       // console.log(formProps);
