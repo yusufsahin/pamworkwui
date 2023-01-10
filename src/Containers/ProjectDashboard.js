@@ -1,24 +1,22 @@
-import React from 'react'
-import ProjectMenu from '../Components/Projects/ProjectMenu'
-import WorkitemList from '../Components/Workitems/WorkitemList'
+import React from "react";
+import ProjectMenu from "../Components/Projects/ProjectMenu";
+import WorkitemList from "../Components/Workitems/WorkitemList";
 import { useDispatch, useSelector } from "react-redux";
-import ProjectCard from '../Components/Projects/ProjectCard';
+import ProjectDetails from "../Components/Projects/ProjectDetails";
+import { Grid } from "@mui/material";
 const ProjectDashboard = () => {
-    const currentProject = useSelector((state) => state.project.currentProject);
-    console.log(currentProject)
+  const currentProject = useSelector((state) => state.project.currentProject);
 
   return (
-    <div>
-      <ProjectMenu/>
-      {Object.keys(currentProject).length !== 0 ? 
-        <ProjectCard currentProject={currentProject}/>
-      :
-        <></>
-      }
-      
-     
-    </div>
-  )
-}
+    <Grid container>
+      <Grid item xs={12} sm={4}>
+        <ProjectMenu />
+      </Grid>
+      <Grid item xs={24} sm={8}>
+        <ProjectDetails currentProject={currentProject} />
+      </Grid>
+    </Grid>
+  );
+};
 
-export default ProjectDashboard
+export default ProjectDashboard;

@@ -15,7 +15,7 @@ const ProjectCard = ({currentProject}) => {
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
-        id="panel1a-header"
+        id={currentProject.id}
       >
         <Typography>{currentProject.name}</Typography>
       </AccordionSummary>

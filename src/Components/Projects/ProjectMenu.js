@@ -43,7 +43,7 @@ const ProjectMenu = () => {
       // ...
     };
     fetchData();
-  }, [currentProject]);
+  }, []);
 
   const handleEdit = async (record) => {
     console.log(record);
@@ -67,9 +67,11 @@ const ProjectMenu = () => {
       )
     );
   };
-  return loading === true ? (
-    <CircularProgress />
-  ) : (
+
+  if(loading===true){
+    return <CircularProgress />
+  }
+  return  (
     <div style={{ height: 400, width: "100%" }}>
       <Button
         variant="contained"

@@ -30,7 +30,7 @@ const WorkitemCard = ({ currentProject }) => {
   useEffect(() => {
     dispatch(getWorkitems(currentProject));
     dispatch(getUsers());
-  }, []);
+  }, [dispatch,currentProject]);
 
   const handleEdit = async (record) => {
     console.log(record);

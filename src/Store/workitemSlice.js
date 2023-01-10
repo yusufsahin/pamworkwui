@@ -124,9 +124,7 @@ export const workitemSlice = createSlice({
 
     builder.addCase(updateWorkitem.fulfilled, (state, action) => {
       const payloadData = action.payload;
-      state.workitems = [...state.workitems,
-        state.workitems.map((item) => (item.id === payloadData.id ? payloadData : item)),
-      ];
+      state.workitems = state.workitems.map((item) => (item.id === payloadData.id ? payloadData : item))
       state.loading = false;
       state.currentWorkitem = payloadData;
       state.workitem = payloadData;
