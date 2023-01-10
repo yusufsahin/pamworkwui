@@ -6,13 +6,13 @@ import TextField from "@mui/material/TextField";
 
 import Box from "@mui/material/Box";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, get } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../Store/modalSlice";
-import { updateWorkitem } from "../../Store/workitemSlice";
+import { updateWorkitem,getWorkitems } from "../../Store/workitemSlice";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -64,7 +64,7 @@ const WorkitemEdit = () => {
       type: workitem.type,
       category:workitem.category,
       state:workitem.state,
-      projectid:currentProject.id,
+      projectId:currentProject.id,
     };
     reset(defaults);
   }, [workitem, reset]);
@@ -72,7 +72,7 @@ const WorkitemEdit = () => {
   const onSubmit = async (formProps) => {
     console.log(formProps);
     if (formProps.name) {
-      await dispatch(updateWorkitem(formProps)).then(dispatch(closeModal()));
+      await dispatch(updateWorkitem(formProps)).then(dispatch(closeModal())).then(dispatch(getWorkitems(currentProject)));
       // console.log(formProps);
     }
   };
