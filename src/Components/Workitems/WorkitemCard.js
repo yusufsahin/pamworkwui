@@ -104,24 +104,29 @@ const WorkitemCard = ({ currentProject }) => {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>{workitem.description}</Typography>
-              {workitem.tasks.map((task) => {
-                return (
-                  <>
-                    <Accordion>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id={task.id}
-                      >
-                        <Typography>{task.name}</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Typography>{task.description}</Typography>
-                      </AccordionDetails>
-                    </Accordion>
-                  </>
-                );
-              })}
+              {
+                workitem.tasks ? 
+                workitem.tasks.map((task) => {
+                  return (
+                    <>
+                      <Accordion>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1a-content"
+                          id={task.id}
+                        >
+                          <Typography>{task.name}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography>{task.description}</Typography>
+                        </AccordionDetails>
+                      </Accordion>
+                    </>
+                  );
+                })
+                :
+                <></>
+              }
             </AccordionDetails>
           </Accordion>
         );

@@ -43,7 +43,6 @@ export const saveWorkitem = createAsyncThunk(
  
   async (data, thunkApi) => {
     try { 
-      console.log(data.memo)
       const response = await axios.post("/workitems", data);
       return response.data;
     } catch (error) {
