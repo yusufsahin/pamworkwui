@@ -12,24 +12,46 @@ export const changeWorkitem = createAsyncThunk(
   "/workitems/changeWorkitem",
   async (data, thunkApi) => {
     try {
-      
-      
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(data);
     }
   }
 );
+export const saveTaskToWorkitem = createAsyncThunk(
+  "/workitems/saveTaskToWorkitem",
+  async (data, thunkApi) => {
+    try {
+      console.log("/workitems/saveTaskToWorkitem");
+      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(data);
+    }
+  }
+);
+export const updateTaskToWorkitem = createAsyncThunk(
+  "/workitems/updateTaskToWorkitem",
+  async (data, thunkApi) => {
+    try {
+      console.log("/workitems/saveTaskToWorkitem");
+      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(data);
+    }
+  }
+);
+
 export const getWorkitems = createAsyncThunk(
   "/workitems/getWorkitems",
   async (project, thunkApi) => {
     try {
-      let url='/workitems';
+      let url = "/workitems";
 
-    if(project!==null)
-    {
-       url=`/workitems?projectId=${project.id}`;
-    }
+      if (project !== null) {
+        url = `/workitems?projectId=${project.id}`;
+      }
 
       const response = await axios.get(url);
       return response.data;
@@ -40,9 +62,9 @@ export const getWorkitems = createAsyncThunk(
 );
 export const saveWorkitem = createAsyncThunk(
   "/workitems/saveWorkitem",
- 
+
   async (data, thunkApi) => {
-    try { 
+    try {
       const response = await axios.post("/workitems", data);
       return response.data;
     } catch (error) {
@@ -69,8 +91,8 @@ export const deleteWorkitem = createAsyncThunk(
       const response = await axios.delete(`/workitems/${data.id}`);
       response.data = {
         ...data,
-        id: data.id
-      }
+        id: data.id,
+      };
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.response?.data);
@@ -85,6 +107,36 @@ export const workitemSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(changeWorkitem.fulfilled, (state, action) => {
       state.currentWorkitem = action.payload;
+    });
+    builder.addCase(saveTaskToWorkitem.fulfilled, (state, action) => {
+      console.log("saveTaskToWorkitem.fulfilled");
+      console.log(action.payload);
+      if (state.workitems.find((w) => w.id === action.payload.workitemId)) {
+        state.workitems.find((w) => w.id === action.payload.workitemId).tasks =
+          [
+            ...state.workitems.find((w) => w.id === action.payload.workitemId)
+              .tasks,
+            action.payload,
+          ];
+      }
+    });
+    builder.addCase(updateTaskToWorkitem.fulfilled, (state, action) => {
+      console.log("updateTaskToWorkitem.fulfilled");
+      console.log(action.payload);
+      if (state.workitems.find((w) => w.id === action.payload.workitemId)) {
+        const updateTaskdata = Object.assign({}, action.payload);
+        console.log("updateTaskdata");
+        console.log(updateTaskdata);
+        state.workitems.find((w) => w.id === action.payload.workitemId).tasks =
+          [
+            ...state.workitems
+              .find((w) => w.id === action.payload.workitemId)
+              .tasks.filter((t) => t.id !== updateTaskdata.id),
+            ...action.payload,
+          ];
+
+        // state.tasks = [...state.tasks.filter((t) => t.workitemid!==data[0].workitemid),...action.payload];
+      }
     });
 
     builder.addCase(getWorkitems.pending, (state) => {
@@ -124,7 +176,9 @@ export const workitemSlice = createSlice({
 
     builder.addCase(updateWorkitem.fulfilled, (state, action) => {
       const payloadData = action.payload;
-      state.workitems = state.workitems.map((item) => (item.id === payloadData.id ? payloadData : item))
+      state.workitems = state.workitems.map((item) =>
+        item.id === payloadData.id ? payloadData : item
+      );
       state.loading = false;
       state.currentWorkitem = payloadData;
       state.workitem = payloadData;
@@ -141,12 +195,14 @@ export const workitemSlice = createSlice({
     });
 
     builder.addCase(deleteWorkitem.fulfilled, (state, action) => {
-      state.workitems = state.workitems.filter((item) => (item.id !== action.payload.id))
+      state.workitems = state.workitems.filter(
+        (item) => item.id !== action.payload.id
+      );
       state.loading = false;
-      if(state.currentWorkitem.id === action.payload.id){
+      if (state.currentWorkitem.id === action.payload.id) {
         state.currentWorkitem = {};
       }
-      if(state.workitem.id === action.payload.id){
+      if (state.workitem.id === action.payload.id) {
         state.workitem = {};
       }
       state.err = "";

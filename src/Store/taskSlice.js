@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../Libs/TaskmanApi";
+import { saveTaskToWorkitem, updateTaskToWorkitem } from "./workitemSlice";
 
 const initialState = {
   tasks: [],
@@ -45,8 +46,10 @@ export const saveTask = createAsyncThunk(
  
   async (data, thunkApi) => {
     try { 
+      const dispatch = thunkApi.dispatch;
+
       const response = await axios.post("/tasks", data);
-      console.log(response)
+      dispatch(saveTaskToWorkitem(response.data));
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.response?.data);
@@ -58,6 +61,10 @@ export const updateTask = createAsyncThunk(
   async (data, thunkApi) => {
     try {
       const response = await axios.put(`/tasks/${data.id}`, data);
+      const dispatch = thunkApi.dispatch;
+      dispatch(updateTaskToWorkitem(data));
+      console.log("/tasks/updateTask");
+      console.log(data);
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.response?.data);
