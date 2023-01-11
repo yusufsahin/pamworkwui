@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { id } from "date-fns/locale";
 import axios from "../Libs/TaskmanApi";
 
 const initialState = {
@@ -124,15 +125,23 @@ export const workitemSlice = createSlice({
       console.log("updateTaskToWorkitem.fulfilled");
       const taskToUpdate = Object.assign({}, action.payload);
       console.log(taskToUpdate);
-      const workitem = state.workitems.find((w) => w.id === taskToUpdate.workitemId);
+      const workitem = state.workitems.find(
+        (w) => w.id === taskToUpdate.workitemId
+      );
+      const widx = state.workitems.findIndex(
+        (item) => item.id === taskToUpdate.workitemId
+      );
+      //const tidx=state.workitems[widx].tasks.findIndex((task)=>task.id===taskToUpdate.id);
+      console.log("widx");
+      console.log(widx);
+      //console.log("tidx");
+      //console.log(tidx);
       if (workitem) {
         const task = workitem.tasks.find((task) => task.id === taskToUpdate.id);
         if (task) {
-          state.workitems
-            .find((w) => w.id === taskToUpdate.workitemId)
-            .tasks.map((item) =>
-              item.id === taskToUpdate.id ? taskToUpdate : item
-            );
+          state.workitems[widx].tasks = state.workitems[widx].tasks.map(
+            (item) => (item.id === taskToUpdate.id ? taskToUpdate : item)
+          );
         }
       }
     });
