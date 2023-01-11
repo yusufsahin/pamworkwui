@@ -122,20 +122,18 @@ export const workitemSlice = createSlice({
     });
     builder.addCase(updateTaskToWorkitem.fulfilled, (state, action) => {
       console.log("updateTaskToWorkitem.fulfilled");
-      console.log(action.payload);
-      if (state.workitems.find((w) => w.id === action.payload.workitemId)) {
-        const updateTaskdata = Object.assign({}, action.payload);
-        console.log("updateTaskdata");
-        console.log(updateTaskdata);
-        state.workitems.find((w) => w.id === action.payload.workitemId).tasks =
-          [
-            ...state.workitems
-              .find((w) => w.id === action.payload.workitemId)
-              .tasks.filter((t) => t.id !== updateTaskdata.id),
-            ...action.payload,
-          ];
-
-        // state.tasks = [...state.tasks.filter((t) => t.workitemid!==data[0].workitemid),...action.payload];
+      const taskToUpdate = Object.assign({}, action.payload);
+      console.log(taskToUpdate);
+      const workitem = state.workitems.find((w) => w.id === taskToUpdate.workitemId);
+      if (workitem) {
+        const task = workitem.tasks.find((task) => task.id === taskToUpdate.id);
+        if (task) {
+          state.workitems
+            .find((w) => w.id === taskToUpdate.workitemId)
+            .tasks.map((item) =>
+              item.id === taskToUpdate.id ? taskToUpdate : item
+            );
+        }
       }
     });
 
