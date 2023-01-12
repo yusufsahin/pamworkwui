@@ -35,7 +35,7 @@ export const updateTaskToWorkitem = createAsyncThunk(
   "/workitems/updateTaskToWorkitem",
   async (data, thunkApi) => {
     try {
-      console.log("/workitems/saveTaskToWorkitem");
+      console.log("/workitems/updateTaskToWorkitem");
       console.log(data);
       return data;
     } catch (error) {
@@ -43,7 +43,18 @@ export const updateTaskToWorkitem = createAsyncThunk(
     }
   }
 );
-
+export const deleteTaskToWorkitem = createAsyncThunk(
+  "/workitems/deleteTaskToWorkitem",
+  async (data, thunkApi) => {
+    try {
+      console.log("/workitems/deleteTaskToWorkitem");
+      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(data);
+    }
+  }
+);
 export const getWorkitems = createAsyncThunk(
   "/workitems/getWorkitems",
   async (project, thunkApi) => {
@@ -128,6 +139,7 @@ export const workitemSlice = createSlice({
       const workitem = state.workitems.find(
         (w) => w.id === taskToUpdate.workitemId
       );
+
       const widx = state.workitems.findIndex(
         (item) => item.id === taskToUpdate.workitemId
       );
@@ -145,7 +157,29 @@ export const workitemSlice = createSlice({
         }
       }
     });
+    builder.addCase(deleteTaskToWorkitem.fulfilled, (state, action) => {
+      console.log("deleteTaskToWorkitem.fulfilled");
+      const taskToDelete = Object.assign({}, action.payload);
+      console.log(taskToDelete);
+      const workitem = state.workitems.find(
+        (w) => w.id === taskToDelete.workitemId
+      );
 
+      const widx = state.workitems.findIndex(
+        (item) => item.id === taskToDelete.workitemId
+      );
+      //const tidx=state.workitems[widx].tasks.findIndex((task)=>task.id===taskToUpdate.id);
+      console.log("widx");
+      console.log(widx);
+      //console.log("tidx");
+      //console.log(tidx);
+      if (workitem) {
+        const task = workitem.tasks.find((task) => task.id === taskToDelete.id);
+        if (task) {
+          state.workitems[widx].tasks = state.workitems[widx].tasks.filter((item) => item.id !== taskToDelete.id);
+        }
+      }
+    });
     builder.addCase(getWorkitems.pending, (state) => {
       state.loading = true;
     });

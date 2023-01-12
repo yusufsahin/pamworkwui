@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../Libs/TaskmanApi";
-import { saveTaskToWorkitem, updateTaskToWorkitem } from "./workitemSlice";
+import { saveTaskToWorkitem, updateTaskToWorkitem ,deleteTaskToWorkitem} from "./workitemSlice";
 
 const initialState = {
   tasks: [],
@@ -76,11 +76,14 @@ export const deleteTask = createAsyncThunk(
   "/tasks/deleteTask",
   async (data, thunkApi) => {
     try {
+      const dispatch = thunkApi.dispatch;
+
       const response = await axios.delete(`/tasks/${data.id}`);
       response.data = {
         ...data,
         id: data.id
       }
+      dispatch(deleteTaskToWorkitem(data));
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.response?.data);
