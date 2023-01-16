@@ -14,12 +14,7 @@ const ModalWrapper = ({ children, size, header }) => {
   const dispatch = useDispatch();
   return (
     <>
-      <Dialog
-        open={true}
-        onClose={() => dispatch(closeModal())}
-        maxWidth={size}
-        fullWidth
-      >
+      <Dialog open={true} maxWidth={size} fullWidth>
         {header && <DialogTitle>{header}</DialogTitle>}
         <Box position="absolute" top={0} right={0}>
           <IconButton>
