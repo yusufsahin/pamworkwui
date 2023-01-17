@@ -3,6 +3,8 @@ import React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 import { useForm, Controller } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
@@ -14,11 +16,23 @@ import { useEffect } from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import {format} from 'date-fns';
+import { format } from "date-fns";
 
-
-const statusArray = ["Cancelled","Blocked","ToDo","InProgress","ToVerify","Done"];
-const categoryArray = [ "Analysis","Development","Test","Operation","Document"];
+const statusArray = [
+  "Cancelled",
+  "Blocked",
+  "ToDo",
+  "InProgress",
+  "ToVerify",
+  "Done",
+];
+const categoryArray = [
+  "Analysis",
+  "Development",
+  "Test",
+  "Operation",
+  "Document",
+];
 const typeArray = ["Task"];
 
 const TaskForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
@@ -28,254 +42,301 @@ const TaskForm = ({ handleSubmit, control, reset, onSubmit, errors }) => {
     <div>
       <Box sx={{ mt: 1 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                sx={{marginBottom:2}}
-                {...field}
-                label="Name"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"name" in errors}
-                helperText={errors.name?.message}
-              />
-            )}
-          />
-          <Controller
-            name="description"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                sx={{marginBottom:2}}
-                {...field}
-                label="Description"
-                rows={8}
-                variant="filled"
-                fullWidth
-                error={"description" in errors}
-                helperText={errors.description?.message}
-              />
-            )}
-          />
-          <Controller
-          name="hoursExpected"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              sx={{marginBottom:2}}
-              {...field}
-              label="Hours Expected"
-              rows={8}
-              variant="filled"
-              fullWidth
-              error={"hoursExpected" in errors}
-              helperText={errors.point?.message}
-            />
-          )}
-          />
-          <Controller
-          name="hoursActual"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              sx={{marginBottom:2}}
-              {...field}
-              label="Hours Actual"
-              rows={8}
-              variant="filled"
-              fullWidth
-              error={"hoursActual" in errors}
-              helperText={errors.point?.message}
-            />
-          )}
-          />
-          <Controller
-            name="assignTo"
-            control={control}
-            render={({ field }) => (
-              <FormControl fullWidth sx={{marginBottom:2, marginTop:2}}>
-                <InputLabel id="demo-simple-select-label">
-                  Assign To
-                </InputLabel>
-                <Select
-                  {...field}
-                  value={field.value ? field.value : null}
-                >
-                  {users.map((user) => {
-                    return (
-                      <MenuItem value={user.username}>{user.username}</MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            )}
-          />
-        
-          <Controller
-            name="status"
-            control={control}
-            render={({ field }) => (
-              <FormControl fullWidth sx={{marginBottom:2}}>
-                <InputLabel>
-                  Task Status
-                </InputLabel>
-                <Select
-                  {...field}
-                
-                  value={field.value ? field.value : null}
-                >
-                  {statusArray.map((status) => {
-                    return <MenuItem value={status}>{status}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            )}
-          />
-           <Controller
-            name="category"
-            control={control}
-            render={({ field }) => (
-              <FormControl fullWidth sx={{marginBottom:2}}>
-                <InputLabel>
-                  Task Category
-                </InputLabel>
-                <Select
-                  {...field}
-                  
-                  value={field.value ? field.value : null}
-                >
-                  {categoryArray.map((category) => {
-                    return <MenuItem value={category}>{category}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            )}
-          />
-           <Controller
-            name="type"
-            control={control}
-            render={({ field }) => (
-              <FormControl fullWidth sx={{marginBottom:2}}>
-                <InputLabel id="demo-simple-select-label">
-                  Task Type
-                </InputLabel>
-                <Select
-                  {...field}
-                
-                  value={field.value ? field.value : null}
-                >
-                  {typeArray.map((type) => {
-                    return <MenuItem value={type}>{type}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            )}
-          />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Controller
-              name="dueDate"
-              control={control}
-              defaultValue={null}
-              render={({
-                field: { onChange, value },
-                fieldState: { error, invalid },
-              }) => (
-                <DatePicker
-                  label="Due Date"
-                  value={value}
-                  onChange={(value) =>
-                    onChange(format(value,"yyyy-MM-dd"))
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      sx={{marginBottom:2}}
-                      helperText={invalid ? error.message : null}
-                      id="startDate"
-                      variant="standard"
-                      margin="dense"
-                      fullWidth
-                      color="primary"
-                      autoComplete="bday"
-                      {...params}
-                      error={invalid}
+          <Paper>
+            <Box>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Controller
+                    name="name"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        sx={{ marginBottom: 2 }}
+                        {...field}
+                        label="Name"
+                        rows={8}
+                        variant="filled"
+                        fullWidth
+                        error={"name" in errors}
+                        helperText={errors.name?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name="description"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        sx={{ marginBottom: 2 }}
+                        {...field}
+                        label="Description"
+                        rows={8}
+                        variant="filled"
+                        fullWidth
+                        error={"description" in errors}
+                        helperText={errors.description?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid container spacing={1}>
+                  <Grid item xs={6}>
+                    <Controller
+                      name="hoursExpected"
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          sx={{ marginBottom: 2 }}
+                          {...field}
+                          label="Hours Expected"
+                          rows={8}
+                          variant="filled"
+                          fullWidth
+                          error={"hoursExpected" in errors}
+                          helperText={errors.point?.message}
+                        />
+                      )}
                     />
-                  )}
-                />
-              )}
-            />
-          </LocalizationProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Controller
-              name="expectedDate"
-              control={control}
-              defaultValue={null}
-              render={({
-                field: { onChange, value },
-                fieldState: { error, invalid },
-              }) => (
-                <DatePicker
-                  label="Expected Date"
-                  value={value}
-                  onChange={(value) =>
-                    onChange(format(value,"yyyy-MM-dd"))
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      sx={{marginBottom:2}}
-                      helperText={invalid ? error.message : null}
-                      id="finishDate"
-                      variant="standard"
-                      margin="dense"
-                      fullWidth
-                      color="primary"
-                      autoComplete="bday"
-                      {...params}
-                      error={invalid}
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Controller
+                      name="hoursActual"
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          sx={{ marginBottom: 2 }}
+                          {...field}
+                          label="Hours Actual"
+                          rows={8}
+                          variant="filled"
+                          fullWidth
+                          error={"hoursActual" in errors}
+                          helperText={errors.point?.message}
+                        />
+                      )}
                     />
-                  )}
-                />
-              )}
-            />
-          </LocalizationProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Controller
-              name="actualDate"
-              control={control}
-              defaultValue={null}
-              render={({
-                field: { onChange, value },
-                fieldState: { error, invalid },
-              }) => (
-                <DatePicker
-                  label="Actual Date"
-                  value={value}
-                  onChange={(value) =>
-                    onChange(format(value,"yyyy-MM-dd"))
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      sx={{marginBottom:2}}
-                      helperText={invalid ? error.message : null}
-                      id="finishDate"
-                      variant="standard"
-                      margin="dense"
-                      fullWidth
-                      color="primary"
-                      autoComplete="bday"
-                      {...params}
-                      error={invalid}
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={3}>
+                    <Controller
+                      name="assignTo"
+                      control={control}
+                      render={({ field }) => (
+                        <FormControl
+                          fullWidth
+                          sx={{ marginBottom: 2, marginTop: 2 }}
+                        >
+                          <InputLabel id="demo-simple-select-label">
+                            Assign To
+                          </InputLabel>
+                          <Select
+                            {...field}
+                            value={field.value ? field.value : null}
+                          >
+                            {users.map((user) => {
+                              return (
+                                <MenuItem value={user.username}>
+                                  {user.username}
+                                </MenuItem>
+                              );
+                            })}
+                          </Select>
+                        </FormControl>
+                      )}
                     />
-                  )}
-                />
-              )}
-            />
-          </LocalizationProvider>
-          <Button type="submit" variant="contained">
-            Save
-          </Button>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Controller
+                      name="status"
+                      control={control}
+                      render={({ field }) => (
+                        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                          <InputLabel>Task Status</InputLabel>
+                          <Select
+                            {...field}
+                            value={field.value ? field.value : null}
+                          >
+                            {statusArray.map((status) => {
+                              return (
+                                <MenuItem value={status}>{status}</MenuItem>
+                              );
+                            })}
+                          </Select>
+                        </FormControl>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Controller
+                      name="category"
+                      control={control}
+                      render={({ field }) => (
+                        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                          <InputLabel>Task Category</InputLabel>
+                          <Select
+                            {...field}
+                            value={field.value ? field.value : null}
+                          >
+                            {categoryArray.map((category) => {
+                              return (
+                                <MenuItem value={category}>{category}</MenuItem>
+                              );
+                            })}
+                          </Select>
+                        </FormControl>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Controller
+                      name="type"
+                      control={control}
+                      render={({ field }) => (
+                        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Task Type
+                          </InputLabel>
+                          <Select
+                            {...field}
+                            value={field.value ? field.value : null}
+                          >
+                            {typeArray.map((type) => {
+                              return <MenuItem value={type}>{type}</MenuItem>;
+                            })}
+                          </Select>
+                        </FormControl>
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={4}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <Controller
+                        name="dueDate"
+                        control={control}
+                        defaultValue={null}
+                        render={({
+                          field: { onChange, value },
+                          fieldState: { error, invalid },
+                        }) => (
+                          <DatePicker
+                            label="Due Date"
+                            value={value}
+                            onChange={(value) =>
+                              onChange(format(value, "yyyy-MM-dd"))
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                sx={{ marginBottom: 2 }}
+                                helperText={invalid ? error.message : null}
+                                id="startDate"
+                                variant="standard"
+                                margin="dense"
+                                fullWidth
+                                color="primary"
+                                autoComplete="bday"
+                                {...params}
+                                error={invalid}
+                              />
+                            )}
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <Controller
+                        name="expectedDate"
+                        control={control}
+                        defaultValue={null}
+                        render={({
+                          field: { onChange, value },
+                          fieldState: { error, invalid },
+                        }) => (
+                          <DatePicker
+                            label="Expected Date"
+                            value={value}
+                            onChange={(value) =>
+                              onChange(format(value, "yyyy-MM-dd"))
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                sx={{ marginBottom: 2 }}
+                                helperText={invalid ? error.message : null}
+                                id="finishDate"
+                                variant="standard"
+                                margin="dense"
+                                fullWidth
+                                color="primary"
+                                autoComplete="bday"
+                                {...params}
+                                error={invalid}
+                              />
+                            )}
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <Controller
+                        name="actualDate"
+                        control={control}
+                        defaultValue={null}
+                        render={({
+                          field: { onChange, value },
+                          fieldState: { error, invalid },
+                        }) => (
+                          <DatePicker
+                            label="Actual Date"
+                            value={value}
+                            onChange={(value) =>
+                              onChange(format(value, "yyyy-MM-dd"))
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                sx={{ marginBottom: 2 }}
+                                helperText={invalid ? error.message : null}
+                                id="finishDate"
+                                variant="standard"
+                                margin="dense"
+                                fullWidth
+                                color="primary"
+                                autoComplete="bday"
+                                {...params}
+                                error={invalid}
+                              />
+                            )}
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button type="submit" variant="contained">
+                    Save
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Paper>
         </form>
       </Box>
     </div>
