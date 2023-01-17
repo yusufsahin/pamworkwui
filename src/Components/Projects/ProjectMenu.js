@@ -27,6 +27,11 @@ import Button from "@mui/material/Button";
 import { openModal } from "../../Store/modalSlice";
 import { Parser } from "html-to-react";
 import { getUsers } from "../../Store/userSlice";
+import Icon from "@mui/material/Icon";
+import Chip from "@mui/material/Chip";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
 
 const ProjectMenu = () => {
   const dispatch = useDispatch();
@@ -68,27 +73,37 @@ const ProjectMenu = () => {
     );
   };
 
-  if(loading===true){
-    return <CircularProgress />
+  if (loading === true) {
+    return <CircularProgress />;
   }
-  return  (
+  return (
     <div style={{ height: 400, width: "100%" }}>
-      <Button
-        variant="contained"
-        onClick={() =>
-          dispatch(openModal({ modalType: "ProjectNewModal", modalProps: {} }))
-        }
-        sx={{
-          marginBottom: 2,
-        }}
-      >
-        New
-      </Button>
       <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         <nav aria-label="main mailbox folders">
           <List>
             <ListItem>
-              <ListItemText primary="Projects" />
+              <Stack direction="row" spacing={2}>
+                {" "}
+                <IconButton
+                  color="primary"
+                  aria-label="Add Project"
+                  component="label"
+                  onClick={() =>
+                    dispatch(
+                      openModal({
+                        modalType: "ProjectNewModal",
+                        modalProps: {},
+                      })
+                    )
+                  }
+                  sx={{
+                    marginBottom: 2,
+                  }}
+                >
+                  <AddCircleIcon fontSize="small" />
+                </IconButton>
+                <ListItemText primary="Projects"/>
+              </Stack>
             </ListItem>
             <Divider />
             {projects.map((project) => (
@@ -97,7 +112,7 @@ const ProjectMenu = () => {
                   onClick={() => {
                     dispatch(changeProject(project));
                   }}
-                  selected={project.id===currentProject.id ? true :false}
+                  selected={project.id === currentProject.id ? true : false}
                 >
                   <ListItemText primary={project.name} />
                 </ListItemButton>
