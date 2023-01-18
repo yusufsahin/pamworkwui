@@ -8,11 +8,16 @@ const ProjectDashboard = () => {
   const currentProject = useSelector((state) => state.project.currentProject);
 
   return (
-    <Grid container>
-      <Grid item xs={12} sm={4}>
+    <Grid
+    container
+    direction="row"
+    justifyContent="space-evenly"
+    alignItems="stretch"
+    >
+      <Grid item xs={3}>
         <ProjectMenu />
       </Grid>
-      <Grid item xs={24} sm={8}>
+      <Grid item xs={8}>
         <ProjectDetails currentProject={currentProject} />
       </Grid>
     </Grid>
