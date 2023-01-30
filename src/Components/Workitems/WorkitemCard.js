@@ -8,6 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import { Box } from "@mui/material";
+
 import {
   getWorkitems,
   changeWorkitem,
@@ -59,7 +61,7 @@ const WorkitemCard = ({ currentProject }) => {
   ) : currentProject === null ? (
     <p>Select a Project please</p>
   ) : (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{width: "100%" }}>
       <Button
         variant="contained"
         onClick={() =>
@@ -74,18 +76,38 @@ const WorkitemCard = ({ currentProject }) => {
 
       {workitems.map((workitem) => {
         return (
-          <Accordion key={workitem.id}>
+          <Accordion key={workitem.id} sx={{
+            marginY:3,
+          }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id={workitem.id}
             >
-              <Typography>{workitem.id}</Typography>
-              <Typography>{workitem.name}</Typography>
-              <Button variant="contained" onClick={() => handleEdit(workitem)}>
+              <Box display="flex"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  marginRight:4,
+                }}
+              >
+                <Typography>{workitem.id}</Typography>
+                <Typography>{workitem.name}</Typography>
+              </Box>
+              <Button variant="contained" onClick={() => handleEdit(workitem)} 
+              sx={{
+                  margin: 2,
+                  maxHeight:40,
+                }}
+              >
                 Edit
               </Button>
-              <Button variant="outlined" onClick={() => handleDelete(workitem)}>
+              <Button variant="outlined" onClick={() => handleDelete(workitem)}                 
+              sx={{
+                  margin: 2,
+                  maxHeight:40,
+                }}
+              >
                 D
               </Button>
               <Button
@@ -101,14 +123,17 @@ const WorkitemCard = ({ currentProject }) => {
                   )
                 }
                 sx={{
-                  marginBottom: 2,
+                  margin: 2,
+                  maxHeight:40,
                 }}
               >
                 New Task
               </Button>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>{workitem.description}</Typography>
+              <Typography sx={{
+                marginBottom:3,
+              }}>{workitem.description}</Typography>
               {workitem.tasks ? (
                 workitem.tasks.map((task) => {
                   return (
@@ -122,7 +147,9 @@ const WorkitemCard = ({ currentProject }) => {
                           <Typography>{task.name}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <Typography>{task.description}</Typography>
+                          <Typography sx={{
+                            marginBottom:2,
+                          }}>{task.description}</Typography>
                           <Button
                             variant="contained"
                             onClick={() =>
@@ -137,6 +164,7 @@ const WorkitemCard = ({ currentProject }) => {
                             }
                             sx={{
                               marginBottom: 2,
+                              marginRight:2,
                             }}
                           >
                             Edit Task

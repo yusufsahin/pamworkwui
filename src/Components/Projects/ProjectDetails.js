@@ -18,8 +18,13 @@ const ProjectDetails = ({ currentProject }) => {
         <Typography>{`${currentProject.id}-${currentProject.name}`}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>{currentProject.description}</Typography>
-        <Divider />
+        <Typography sx={{
+          marginBottom:2,
+        }}>
+          {currentProject.description}</Typography>
+        <Divider sx={{
+          marginBottom:2,
+        }}/>
         <WorkitemCard currentProject={currentProject} />
       </AccordionDetails>
     </Accordion>

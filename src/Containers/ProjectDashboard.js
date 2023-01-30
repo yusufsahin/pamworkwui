@@ -10,14 +10,14 @@ const ProjectDashboard = () => {
   return (
     <Grid
     container
-    direction="row"
-    justifyContent="space-evenly"
-    alignItems="stretch"
+    columnSpacing={{
+      xs:2,
+    }}
     >
       <Grid item xs={3}>
         <ProjectMenu />
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={9}>
         <ProjectDetails currentProject={currentProject} />
       </Grid>
     </Grid>
